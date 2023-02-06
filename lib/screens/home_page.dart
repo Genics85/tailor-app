@@ -9,21 +9,49 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<IconData> listOfIcons = [
-    Icons.poll_outlined,
-    Icons.add,
-    Icons.home,
-    Icons.photo_library_outlined,
-    Icons.settings,
-  ];
-  List iconTitle = ["Finance","Add", "Home", "Posts", "Settings"];
-  int currentIndex = 2;
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return const SafeArea(
+    return SafeArea(
         child: Scaffold(
-      body: Text("Homepage"),
-    ));
+            backgroundColor: AppColors.colorLight,
+            body: Container(
+              width: size.width,
+              padding: const EdgeInsets.all(15),
+              child: Stack(children: [
+                SizedBox(
+                  width: size.width * 0.9,
+                  child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: const Color.fromARGB(192, 255, 255, 255),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                              borderSide: BorderSide.none),
+                          iconColor: AppColors.colorDark,
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {},
+                          ),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 5),
+                          isDense: true,
+                          hintText: "Search")),
+                ),
+                ListView.builder(
+                    itemCount: 3,
+                    itemBuilder: (BuildContext context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        width: size.width,
+                        height: size.height * 0.09,
+                        decoration: const BoxDecoration(color: Colors.white),
+                      );
+                    })
+              ]),
+            )));
   }
 }
