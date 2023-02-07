@@ -32,7 +32,7 @@ class _PostsPageState extends State<PostsPage> {
                     children: [
                       Container(
                         height: size.height * 0.6,
-                        decoration:const BoxDecoration(
+                        decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(6),
                                 topRight: Radius.circular(6)),
@@ -41,11 +41,33 @@ class _PostsPageState extends State<PostsPage> {
                                 image: NetworkImage(
                                     "https://media.npr.org/assets/img/2022/07/19/dalle3_custom-6b01300a7345dd51abd00e7841fb929827dcb837.jpg"))),
                       ),
-                      Row(children: [
-                        
-                        Icon(Icons.thumb_up),
-                        Icon(Icons.thumb_down_outlined)
-                      ]),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 15),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.thumb_up,
+                                        size: 40,
+                                      )),
+                                  const Text("34")
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                          size: 40, Icons.thumb_down_outlined)),
+                                  const Text("12")
+                                ],
+                              )
+                            ]),
+                      ),
                     ]),
               );
             },
