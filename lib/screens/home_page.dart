@@ -19,15 +19,69 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppColors.colorLight,
             body: Container(
               width: size.width,
-              padding: const EdgeInsets.all(15),
-              child: Stack(children: [
-                SizedBox(
+              child: Stack(alignment: Alignment.topCenter, children: [
+                ListView.builder(
+                    itemCount: 12,
+                    itemBuilder: (BuildContext context, index) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.only(bottom: 5),
+                        width: size.width,
+                        height: size.height * 0.09,
+                        decoration: const BoxDecoration(color: Colors.white),
+                        child: Row(children: [
+                          Container(
+                              margin: const EdgeInsets.only(right: 6),
+                              height: size.height * 0.075,
+                              width: size.width * 0.15,
+                              decoration:
+                                  const BoxDecoration(color: Colors.red)),
+                          Container(
+                              margin: const EdgeInsets.only(right: 6),
+                              height: size.height * 0.075,
+                              width: size.width * 0.15,
+                              decoration:
+                                  const BoxDecoration(color: Colors.blue)),
+                          Container(
+                            margin: EdgeInsets.only(right: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "Bra Akwasi",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                SizedBox(height: 9),
+                                Text("Officia velit fugiat laborum some")
+                              ],
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.timer_outlined),
+                              SizedBox(height: 9),
+                              Text("3",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ))
+                            ],
+                          )
+                        ]),
+                      );
+                    }),
+                Container(
+                  margin: const EdgeInsets.only(top: 15),
                   width: size.width * 0.9,
                   child: TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: const Color.fromARGB(192, 255, 255, 255),
+                          fillColor: AppColors.colorLight,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50),
                               borderSide: BorderSide.none),
@@ -41,16 +95,6 @@ class _HomePageState extends State<HomePage> {
                           isDense: true,
                           hintText: "Search")),
                 ),
-                ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 5),
-                        width: size.width,
-                        height: size.height * 0.09,
-                        decoration: const BoxDecoration(color: Colors.white),
-                      );
-                    })
               ]),
             )));
   }
