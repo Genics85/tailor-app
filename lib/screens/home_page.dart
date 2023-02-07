@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
         child: Scaffold(
             backgroundColor: AppColors.colorLight,
-            body: Container(
+            body: SizedBox(
               width: size.width,
               child: Stack(alignment: Alignment.topCenter, children: [
                 ListView.builder(
