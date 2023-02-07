@@ -15,13 +15,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
+        bottom: false,
         child: Scaffold(
             backgroundColor: AppColors.colorLight,
             body: SizedBox(
               width: size.width,
               child: Stack(alignment: Alignment.topCenter, children: [
                 ListView.builder(
-                    itemCount: 12,
+                    itemCount: 18,
                     itemBuilder: (BuildContext context, index) {
                       return Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -34,14 +35,19 @@ class _HomePageState extends State<HomePage> {
                               margin: const EdgeInsets.only(right: 6),
                               height: size.height * 0.075,
                               width: size.width * 0.15,
-                              decoration:
-                                  const BoxDecoration(color: Colors.red)),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
                           Container(
                               margin: const EdgeInsets.only(right: 6),
                               height: size.height * 0.075,
                               width: size.width * 0.15,
-                              decoration:
-                                  const BoxDecoration(color: Colors.blue)),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                          "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png")))),
                           Container(
                             margin: EdgeInsets.only(right: 5),
                             child: Column(
@@ -81,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       controller: _searchController,
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: AppColors.colorLight,
+                          fillColor: Color.fromARGB(242, 255, 255, 255),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50),
                               borderSide: BorderSide.none),

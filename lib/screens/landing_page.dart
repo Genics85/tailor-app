@@ -34,11 +34,13 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.colorLight,
+      extendBody: true,
+      backgroundColor: Colors.transparent,
       bottomNavigationBar: appNavigationBar(size),
       body: listOfPages.elementAt(currentIndex),
     );
   }
+
   Widget appNavigationBar(Size size) {
     return Container(
       margin: const EdgeInsets.all(10),
