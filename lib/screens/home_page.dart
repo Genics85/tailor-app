@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {},
                           ),
                           contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 5),
+                              const EdgeInsets.symmetric(horizontal: 15),
                           isDense: true,
                           hintText: "Search")),
                 ),
