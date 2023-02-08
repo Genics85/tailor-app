@@ -80,7 +80,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                       children: [
                         Container(
                             height: size.height * 0.3,
-                            width: size.width * 0.475,
+                            width: size.width * 0.471,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 image: const DecorationImage(
@@ -89,13 +89,13 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                         "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
                         Container(
                             height: size.height * 0.3,
-                            width: size.width * 0.475,
+                            width: size.width * 0.471,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(
-                                        "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png"))))
+                                        "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png")))),
                       ]),
                   const SizedBox(
                     height: 10,
@@ -110,11 +110,31 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     height: 10,
                   ),
                   Container(
-                    width: size.width * 0.95,
-                    height: size.height * 0.3,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6)),
+                      padding: const EdgeInsets.all(10),
+                      width: size.width * 0.95,
+                      height: size.height * 0.25,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6)),
+                      child: const Text(
+                          "Pariatur do excepteur elit sint velit culpa aliquip culpa mollit. Et pariatur commodo cillum ea id cupidatat magna pariatur. Nostrud excepteur adipisicing et cillum laborum incididunt non velit id aute cupidatat elit occaecat. Id magna veniam sint dolore adipisicing. Ipsum velit cillum ullamco magna.")),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            minimumSize:
+                                Size(size.width * 0.95, size.height * 0.065),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold)),
+                        child: const Text("Done")),
                   )
                 ]))));
   }
