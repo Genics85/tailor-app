@@ -9,6 +9,9 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _labelController = TextEditingController();
+  final TextEditingController _valueController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -17,15 +20,63 @@ class _AddPageState extends State<AddPage> {
         child: Scaffold(
           backgroundColor: AppColors.colorLight,
           body: Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(15),
               width: size.width,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Text("Add new work", style: TextStyle(fontSize: 24)),
-                    SizedBox(height: 10),
+                    const Text("Add new work", style: TextStyle(fontSize: 24)),
+                    const SizedBox(height: 10),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Name:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                        controller: _labelController,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                            hintText: "Name")),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Phone:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                        controller: _labelController,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                            hintText: "Phone number")),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
                             onPressed: () {},
@@ -37,7 +88,8 @@ class _AddPageState extends State<AddPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 textStyle: const TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                                  fontSize: 24,
+                                )),
                             child: Column(
                               children: const [
                                 Icon(
@@ -60,7 +112,8 @@ class _AddPageState extends State<AddPage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 textStyle: const TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                                  fontSize: 24,
+                                )),
                             child: Column(
                               children: const [
                                 Icon(
@@ -85,20 +138,89 @@ class _AddPageState extends State<AddPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      height: size.height * 0.2,
-                      child: TextField(
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor:
-                                  const Color.fromARGB(242, 255, 255, 255),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                  borderSide: BorderSide.none),
-                              iconColor: AppColors.colorDark,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              hintText: "Description")),
+                    TextField(
+                        controller: _descriptionController,
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding: const EdgeInsets.all(15),
+                            hintText: "Description about work")),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            flex: 4,
+                            child: Column(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Price:",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                    controller: _labelController,
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: const Color.fromARGB(
+                                            242, 255, 255, 255),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            borderSide: BorderSide.none),
+                                        iconColor: AppColors.colorDark,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                        hintText: "Price"))
+                              ],
+                            )),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            flex: 4,
+                            child: Column(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Due date:",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                    controller: _labelController,
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: const Color.fromARGB(
+                                            242, 255, 255, 255),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            borderSide: BorderSide.none),
+                                        iconColor: AppColors.colorDark,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                        hintText: "Due date"))
+                              ],
+                            ))
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -116,6 +238,7 @@ class _AddPageState extends State<AddPage> {
                           Expanded(
                               flex: 4,
                               child: TextField(
+                                  controller: _labelController,
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: const Color.fromARGB(
@@ -127,7 +250,7 @@ class _AddPageState extends State<AddPage> {
                                       iconColor: AppColors.colorDark,
                                       contentPadding:
                                           const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                              horizontal: 15),
                                       hintText: "Part"))),
                           const SizedBox(
                             width: 10,
@@ -135,6 +258,7 @@ class _AddPageState extends State<AddPage> {
                           Expanded(
                               flex: 4,
                               child: TextField(
+                                  controller: _valueController,
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: const Color.fromARGB(
@@ -146,7 +270,7 @@ class _AddPageState extends State<AddPage> {
                                       iconColor: AppColors.colorDark,
                                       contentPadding:
                                           const EdgeInsets.symmetric(
-                                              horizontal: 5),
+                                              horizontal: 15),
                                       hintText: "Value")))
                         ])
                   ],

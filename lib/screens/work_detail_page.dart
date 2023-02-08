@@ -16,7 +16,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
         child: Scaffold(
             backgroundColor: AppColors.colorLight,
             body: Container(
-                padding: EdgeInsets.symmetric(horizontal: 7),
+                padding: const EdgeInsets.all(15),
                 width: size.width,
                 child: Column(children: [
                   const Text(
@@ -79,8 +79,8 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
-                            height: size.height * 0.3,
-                            width: size.width * 0.471,
+                            height: size.height * 0.28,
+                            width: size.width * 0.45,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 image: const DecorationImage(
@@ -88,8 +88,8 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                     image: NetworkImage(
                                         "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
                         Container(
-                            height: size.height * 0.3,
-                            width: size.width * 0.471,
+                            height: size.height * 0.28,
+                            width: size.width * 0.45,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 image: const DecorationImage(
@@ -127,7 +127,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
                             minimumSize:
-                                Size(size.width * 0.95, size.height * 0.065),
+                                Size(size.width * 0.5, size.height * 0.065),
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.green,
                             padding: const EdgeInsets.symmetric(
