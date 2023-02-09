@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../widgets/colors.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({super.key});
+  AddPage({super.key});
 
   @override
   State<AddPage> createState() => _AddPageState();
@@ -15,6 +18,26 @@ class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    File? stylePic;
+    XFile? clothPic;
+
+    pickStyle() async {
+      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return null;
+      setState(() {
+        stylePic = File(image.path);
+      });
+    }
+
+    pickCloth() async {
+      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return null;
+      setState(() {
+        clothPic = image;
+      });
+    }
+
     return SafeArea(
         bottom: false,
         child: Scaffold(
@@ -79,7 +102,7 @@ class _AddPageState extends State<AddPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: pickStyle,
                             style: ElevatedButton.styleFrom(
                                 minimumSize:
                                     Size(size.width * 0.45, size.height * 0.20),
@@ -90,20 +113,22 @@ class _AddPageState extends State<AddPage> {
                                 textStyle: const TextStyle(
                                   fontSize: 24,
                                 )),
-                            child: Column(
-                              children: const [
-                                Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 50,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("Add Style")
-                              ],
-                            )),
+                            child: stylePic == null
+                                ? Column(
+                                    children: const [
+                                      Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 50,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Add Style")
+                                    ],
+                                  )
+                                : Image.file(stylePic!)),
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: pickCloth,
                             style: ElevatedButton.styleFrom(
                                 minimumSize:
                                     Size(size.width * 0.45, size.height * 0.20),
