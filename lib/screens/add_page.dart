@@ -18,57 +18,66 @@ class _AddPageState extends State<AddPage> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _labelController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
+
+  int counter = 0;
+  void increaseCounter() {
+    setState(() {
+      counter++;
+    });
+    debugPrint("clicked");
+  }
+
+  File? stylePic;
+  File? clothPic;
+  DateTime dateTime = DateTime.now();
+  bool static = true;
+
+  pickDate(BuildContext context) async {
+    await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(primary: AppColors.colorDark),
+                textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                        backgroundColor: AppColors.colorDark,
+                        foregroundColor: Colors.white))),
+            child: child!,
+          );
+        }).then((value) {
+      setState(() {
+        dateTime = value!;
+      });
+    });
+  }
+
+  pickStyle() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return null;
+    setState(() {
+      stylePic = File(image.path);
+    });
+  }
+
+  pickCloth() async {
+    debugPrint((clothPic == null).toString());
+    debugPrint("###########################################");
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return null;
+    setState(() {
+      clothPic = File(image.path);
+    });
+    debugPrint("###########################################");
+    debugPrint((clothPic == null).toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    File? stylePic;
-    File? clothPic;
-    DateTime dateTime = DateTime.now();
-    bool static = true;
-
-    pickDate(BuildContext context) async {
-      await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now(),
-          lastDate: DateTime(2100),
-          builder: (context, child) {
-            return Theme(
-              data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(primary: AppColors.colorDark),
-                  textButtonTheme: TextButtonThemeData(
-                      style: TextButton.styleFrom(
-                          backgroundColor: AppColors.colorDark,
-                          foregroundColor: Colors.white))),
-              child: child!,
-            );
-          }).then((value) {
-        setState(() {
-          dateTime = value!;
-        });
-      });
-    }
-
-    pickStyle() async {
-      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return null;
-      setState(() {
-        stylePic = File(image.path);
-      });
-    }
-
-    pickCloth() async {
-      debugPrint((clothPic == null).toString());
-      debugPrint("###########################################");
-      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return null;
-      setState(() {
-        clothPic = File(image.path);
-      });
-      debugPrint("###########################################");
-      debugPrint((clothPic == null).toString());
-    }
 
     return SafeArea(
         bottom: false,
@@ -144,12 +153,12 @@ class _AddPageState extends State<AddPage> {
                                 backgroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
-                                textStyle: const TextStyle(
+                                textStyle: TextStyle(
                                   fontSize: 24,
                                 )),
                             child: stylePic == null
                                 ? Column(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.camera_alt_outlined,
                                         size: 50,
@@ -157,12 +166,12 @@ class _AddPageState extends State<AddPage> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text("Add Style")
+                                      Text(counter.toString())
                                     ],
                                   )
                                 : Image.file(stylePic!)),
                         GestureDetector(
-                          onTap: pickCloth,
+                          onTap: increaseCounter,
                           child: Container(
                             width: size.width * 0.45,
                             height: size.height * 0.20,
