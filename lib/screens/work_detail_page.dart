@@ -110,32 +110,70 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     height: 10,
                   ),
                   Container(
-                      padding: const EdgeInsets.all(10),
-                      width: size.width * 0.95,
-                      height: size.height * 0.25,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(6)),
-                      child: const Text(
-                          "Pariatur do excepteur elit sint velit culpa aliquip culpa mollit. Et pariatur commodo cillum ea id cupidatat magna pariatur. Nostrud excepteur adipisicing et cillum laborum incididunt non velit id aute cupidatat elit occaecat. Id magna veniam sint dolore adipisicing. Ipsum velit cillum ullamco magna.")),
+                    padding: const EdgeInsets.all(10),
+                    width: size.width * 0.95,
+                    height: size.height * 0.25,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Text(
+                      "Pariatur do excepteur elit sint velit culpa aliquip culpa mollit. Et pariatur commodo cillum ea id cupidatat magna pariatur. Nostrud excepteur adipisicing et cillum laborum incididunt non velit id aute cupidatat elit occaecat. Id magna veniam sint dolore adipisicing. Ipsum velit cillum ullamco magna.",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            minimumSize:
-                                Size(size.width * 0.5, size.height * 0.065),
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.green,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            textStyle: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold)),
-                        child: const Text("Done")),
-                  )
+                  const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Measurements:",
+                        style: TextStyle(fontSize: 18),
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: 5,
+                              itemBuilder: (BuildContext context, index) {
+                                return Container(
+                                  margin: const EdgeInsets.only(
+                                      bottom: 5, right: 5),
+                                  width: size.width * 0.45,
+                                  height: size.height * 0.09,
+                                  decoration:
+                                     const BoxDecoration(color: Colors.white),
+                                );
+                              }),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: ElevatedButton(
+                  //       onPressed: () {},
+                  //       style: ElevatedButton.styleFrom(
+                  //           minimumSize:
+                  //               Size(size.width * 0.5, size.height * 0.065),
+                  //           foregroundColor: Colors.white,
+                  //           backgroundColor: Colors.green,
+                  //           padding: const EdgeInsets.symmetric(
+                  //               horizontal: 10, vertical: 10),
+                  //           textStyle: const TextStyle(
+                  //               fontSize: 24, fontWeight: FontWeight.bold)),
+                  //       child: const Text("Done")),
+                  // )
                 ]))));
   }
 }

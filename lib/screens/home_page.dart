@@ -25,17 +25,23 @@ class _HomePageState extends State<HomePage> {
                 ListView.builder(
                     itemCount: 18,
                     itemBuilder: (BuildContext context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const WorkDetailsPage()));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          margin: const EdgeInsets.only(bottom: 5),
-                          width: size.width,
-                          height: size.height * 0.09,
-                          decoration: const BoxDecoration(color: Colors.white),
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        margin: const EdgeInsets.only(bottom: 5),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const WorkDetailsPage()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: Size(size.width, size.height * 0.09),
+                              foregroundColor: AppColors.colorDark,
+                              backgroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              textStyle: const TextStyle(
+                                fontSize: 13,
+                              )),
                           child: Row(children: [
                             Container(
                                 margin: const EdgeInsets.only(right: 6),
