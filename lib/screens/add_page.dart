@@ -32,8 +32,8 @@ class _AddPageState extends State<AddPage> {
   DateTime dateTime = DateTime.now();
   bool static = true;
 
-  pickDate(BuildContext context) async {
-    await showDatePicker(
+  pickDate(BuildContext context) {
+    showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
@@ -49,9 +49,13 @@ class _AddPageState extends State<AddPage> {
             child: child!,
           );
         }).then((value) {
-      setState(() {
-        dateTime = value!;
-      });
+      if (value == null) {
+        return;
+      } else {
+        setState(() {
+          dateTime = value;
+        });
+      }
     });
   }
 
@@ -64,15 +68,11 @@ class _AddPageState extends State<AddPage> {
   }
 
   pickCloth() async {
-    debugPrint((clothPic == null).toString());
-    debugPrint("###########################################");
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return null;
     setState(() {
       clothPic = File(image.path);
     });
-    debugPrint("###########################################");
-    debugPrint((clothPic == null).toString());
   }
 
   @override
@@ -143,22 +143,21 @@ class _AddPageState extends State<AddPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
-                            onPressed: () {
-                              debugPrint(dateTime.toString());
-                            },
+                            onPressed: pickStyle,
                             style: ElevatedButton.styleFrom(
-                                minimumSize:
+                                fixedSize:
                                     Size(size.width * 0.45, size.height * 0.20),
-                                foregroundColor: AppColors.colorDark,
-                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.colorDark,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                   fontSize: 24,
                                 )),
                             child: stylePic == null
                                 ? Column(
-                                    children: [
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
                                       Icon(
                                         Icons.camera_alt_outlined,
                                         size: 50,
@@ -166,55 +165,53 @@ class _AddPageState extends State<AddPage> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text(counter.toString())
+                                      Text("Pick Style")
                                     ],
                                   )
-                                : Image.file(stylePic!)),
-                        GestureDetector(
-                          onTap: increaseCounter,
-                          child: Container(
-                            width: size.width * 0.45,
-                            height: size.height * 0.20,
-                            decoration: BoxDecoration(
-                                color: static ? Colors.white : Colors.blue),
-                            alignment: Alignment.center,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 40,
-                                  ),
-                                  Text(
-                                    "Add Cloth",
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7)),
+                                    width: size.width * 0.45,
+                                    height: size.height * 0.20,
+                                    child: Image.file(
+                                      stylePic!,
+                                      fit: BoxFit.cover,
+                                    ))),
+                        ElevatedButton(
+                            onPressed: pickCloth,
+                            style: ElevatedButton.styleFrom(
+                                fixedSize:
+                                    Size(size.width * 0.45, size.height * 0.20),
+                                foregroundColor: AppColors.colorDark,
+                                backgroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                textStyle: const TextStyle(
+                                  fontSize: 24,
+                                )),
+                            child: clothPic == null
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 50,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Add Fabric")
+                                    ],
                                   )
-                                ]),
-                          ),
-                        )
-                        // ElevatedButton(
-                        //     onPressed: pickCloth,
-                        //     style: ElevatedButton.styleFrom(
-                        //         minimumSize:
-                        //             Size(size.width * 0.45, size.height * 0.20),
-                        //         foregroundColor: AppColors.colorDark,
-                        //         backgroundColor: Colors.white,
-                        //         padding: const EdgeInsets.symmetric(
-                        //             horizontal: 10, vertical: 10),
-                        //         textStyle: const TextStyle(
-                        //           fontSize: 24,
-                        //         )),
-                        //     child: Column(
-                        //       children: const [
-                        //         Icon(
-                        //           Icons.camera_alt_outlined,
-                        //           size: 50,
-                        //         ),
-                        //         SizedBox(
-                        //           height: 10,
-                        //         ),
-                        //         Text("Add Fabric")
-                        //       ],
-                        //     ))
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7)),
+                                    width: size.width * 0.45,
+                                    height: size.height * 0.20,
+                                    child: Image.file(
+                                      clothPic!,
+                                      fit: BoxFit.cover,
+                                    )))
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -304,9 +301,10 @@ class _AddPageState extends State<AddPage> {
                                         textStyle: const TextStyle(
                                           fontSize: 18,
                                         )),
-                                    child: const Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text("Pick due date"))),
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            '${dateTime.day}/${dateTime.month}/${dateTime.year}'))),
                               ],
                             ))
                       ],
