@@ -5,13 +5,16 @@ import '../widgets/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddPage extends StatefulWidget {
-  AddPage({super.key});
+  const AddPage({super.key});
 
   @override
   State<AddPage> createState() => _AddPageState();
 }
 
 class _AddPageState extends State<AddPage> {
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _labelController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
@@ -20,7 +23,32 @@ class _AddPageState extends State<AddPage> {
     Size size = MediaQuery.of(context).size;
 
     File? stylePic;
-    XFile? clothPic;
+    File? clothPic;
+    DateTime dateTime = DateTime.now();
+    bool static = true;
+
+    pickDate(BuildContext context) async {
+      await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2100),
+          builder: (context, child) {
+            return Theme(
+              data: Theme.of(context).copyWith(
+                  colorScheme: ColorScheme.light(primary: AppColors.colorDark),
+                  textButtonTheme: TextButtonThemeData(
+                      style: TextButton.styleFrom(
+                          backgroundColor: AppColors.colorDark,
+                          foregroundColor: Colors.white))),
+              child: child!,
+            );
+          }).then((value) {
+        setState(() {
+          dateTime = value!;
+        });
+      });
+    }
 
     pickStyle() async {
       var image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -31,11 +59,15 @@ class _AddPageState extends State<AddPage> {
     }
 
     pickCloth() async {
+      debugPrint((clothPic == null).toString());
+      debugPrint("###########################################");
       var image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return null;
       setState(() {
-        clothPic = image;
+        clothPic = File(image.path);
       });
+      debugPrint("###########################################");
+      debugPrint((clothPic == null).toString());
     }
 
     return SafeArea(
@@ -60,7 +92,7 @@ class _AddPageState extends State<AddPage> {
                       height: 10,
                     ),
                     TextField(
-                        controller: _labelController,
+                        controller: _nameController,
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: const Color.fromARGB(242, 255, 255, 255),
@@ -84,7 +116,7 @@ class _AddPageState extends State<AddPage> {
                       height: 10,
                     ),
                     TextField(
-                        controller: _labelController,
+                        controller: _phoneController,
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: const Color.fromARGB(242, 255, 255, 255),
@@ -102,7 +134,9 @@ class _AddPageState extends State<AddPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ElevatedButton(
-                            onPressed: pickStyle,
+                            onPressed: () {
+                              debugPrint(dateTime.toString());
+                            },
                             style: ElevatedButton.styleFrom(
                                 minimumSize:
                                     Size(size.width * 0.45, size.height * 0.20),
@@ -127,30 +161,51 @@ class _AddPageState extends State<AddPage> {
                                     ],
                                   )
                                 : Image.file(stylePic!)),
-                        ElevatedButton(
-                            onPressed: pickCloth,
-                            style: ElevatedButton.styleFrom(
-                                minimumSize:
-                                    Size(size.width * 0.45, size.height * 0.20),
-                                foregroundColor: AppColors.colorDark,
-                                backgroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                textStyle: const TextStyle(
-                                  fontSize: 24,
-                                )),
+                        GestureDetector(
+                          onTap: pickCloth,
+                          child: Container(
+                            width: size.width * 0.45,
+                            height: size.height * 0.20,
+                            decoration: BoxDecoration(
+                                color: static ? Colors.white : Colors.blue),
+                            alignment: Alignment.center,
                             child: Column(
-                              children: const [
-                                Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 50,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("Add Fabric")
-                              ],
-                            ))
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt_outlined,
+                                    size: 40,
+                                  ),
+                                  Text(
+                                    "Add Cloth",
+                                  )
+                                ]),
+                          ),
+                        )
+                        // ElevatedButton(
+                        //     onPressed: pickCloth,
+                        //     style: ElevatedButton.styleFrom(
+                        //         minimumSize:
+                        //             Size(size.width * 0.45, size.height * 0.20),
+                        //         foregroundColor: AppColors.colorDark,
+                        //         backgroundColor: Colors.white,
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 10, vertical: 10),
+                        //         textStyle: const TextStyle(
+                        //           fontSize: 24,
+                        //         )),
+                        //     child: Column(
+                        //       children: const [
+                        //         Icon(
+                        //           Icons.camera_alt_outlined,
+                        //           size: 50,
+                        //         ),
+                        //         SizedBox(
+                        //           height: 10,
+                        //         ),
+                        //         Text("Add Fabric")
+                        //       ],
+                        //     ))
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -195,7 +250,7 @@ class _AddPageState extends State<AddPage> {
                                   height: 10,
                                 ),
                                 TextField(
-                                    controller: _labelController,
+                                    controller: _priceController,
                                     decoration: InputDecoration(
                                         filled: true,
                                         fillColor: const Color.fromARGB(
@@ -228,21 +283,21 @@ class _AddPageState extends State<AddPage> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                TextField(
-                                    controller: _labelController,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: const Color.fromARGB(
-                                            242, 255, 255, 255),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                            borderSide: BorderSide.none),
-                                        iconColor: AppColors.colorDark,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                        hintText: "Due date"))
+                                ElevatedButton(
+                                    onPressed: () => pickDate(context),
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(size.width * 0.5,
+                                            size.height * 0.057),
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: AppColors.colorDark,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        textStyle: const TextStyle(
+                                          fontSize: 18,
+                                        )),
+                                    child: const Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("Pick due date"))),
                               ],
                             ))
                       ],
@@ -276,7 +331,7 @@ class _AddPageState extends State<AddPage> {
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 15),
-                                      hintText: "Part"))),
+                                      hintText: "Label"))),
                           const SizedBox(
                             width: 10,
                           ),
