@@ -149,7 +149,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                   width: size.width * 0.45,
                                   height: size.height * 0.09,
                                   decoration:
-                                     const BoxDecoration(color: Colors.white),
+                                      const BoxDecoration(color: Colors.white),
                                 );
                               }),
                         )

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import '../widgets/colors.dart';
@@ -73,6 +74,10 @@ class _AddPageState extends State<AddPage> {
     setState(() {
       clothPic = File(image.path);
     });
+  }
+
+  saveImagesToLocalStorage() async {
+    final String path = await getApplicationDocumentsDirectory().path;
   }
 
   @override
