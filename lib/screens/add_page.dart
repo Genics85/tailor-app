@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'dart:async';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import '../widgets/colors.dart';
 import 'package:image_picker/image_picker.dart';
@@ -77,13 +76,15 @@ class _AddPageState extends State<AddPage> {
   }
 
   saveImagesToLocalStorage() async {
-    final String path = await getApplicationDocumentsDirectory().path;
+    final directory = await getApplicationDocumentsDirectory();
+    String path = directory.path;
+    await clothPic?.copy('$path/${clothPic!.path}');
+    await stylePic?.copy('$path/${stylePic!.path}');
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return SafeArea(
         bottom: false,
         child: Scaffold(
@@ -179,7 +180,7 @@ class _AddPageState extends State<AddPage> {
                                     width: size.width * 0.45,
                                     height: size.height * 0.20,
                                     child: Image.file(
-                                      stylePic!,
+                                      File(stylePic!.path),
                                       fit: BoxFit.cover,
                                     ))),
                         ElevatedButton(
@@ -214,7 +215,7 @@ class _AddPageState extends State<AddPage> {
                                     width: size.width * 0.45,
                                     height: size.height * 0.20,
                                     child: Image.file(
-                                      clothPic!,
+                                      File(clothPic!.path),
                                       fit: BoxFit.cover,
                                     )))
                       ],
