@@ -35,7 +35,7 @@ class _LandingPageState extends State<LandingPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       bottomNavigationBar: appNavigationBar(size),
       body: listOfPages.elementAt(currentIndex),
     );
