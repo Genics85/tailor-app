@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import '../widgets/colors.dart';
@@ -30,7 +31,7 @@ class _AddPageState extends State<AddPage> {
   File? stylePic;
   File? clothPic;
   DateTime dateTime = DateTime.now();
-  bool static = true;
+  String localStyleImagePath = "";
 
   pickDate(BuildContext context) {
     showDatePicker(
@@ -78,8 +79,14 @@ class _AddPageState extends State<AddPage> {
   saveImagesToLocalStorage() async {
     final directory = await getApplicationDocumentsDirectory();
     String path = directory.path;
-    await clothPic?.copy('$path/${clothPic!.path}');
-    await stylePic?.copy('$path/${stylePic!.path}');
+    final clothFileName = basename(clothPic!.path);
+    final styleFileName = basename(clothPic!.path);
+    await clothPic?.copy('$path/$clothFileName');
+    await stylePic?.copy('$path/$styleFileName');
+    setState(() {
+      localStyleImagePath = '$path/$styleFileName';
+    });
+    return ['$path/$styleFileName', '$path/$clothFileName'];
   }
 
   @override
@@ -220,6 +227,19 @@ class _AddPageState extends State<AddPage> {
                                     )))
                       ],
                     ),
+                    ElevatedButton(
+                        onPressed: saveImagesToLocalStorage,
+                        child: Text("Upload")),
+                    localStyleImagePath.length > 2
+                        ? Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(
+                                    image:
+                                        FileImage(File(localStyleImagePath)))))
+                        : SizedBox(height: 5),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,
