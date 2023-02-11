@@ -36,33 +36,6 @@ class _AddPageState extends State<AddPage> {
   String localStyleImagePath = "";
   List<List> measurements = [];
 
-  pickDate(BuildContext context) {
-    showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2100),
-        builder: (context, child) {
-          return Theme(
-            data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme.light(primary: AppColors.colorDark),
-                textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                        backgroundColor: AppColors.colorDark,
-                        foregroundColor: Colors.white))),
-            child: child!,
-          );
-        }).then((value) {
-      if (value == null) {
-        return;
-      } else {
-        setState(() {
-          dateTime = value;
-        });
-      }
-    });
-  }
-
   pickStyle() async {
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return null;
@@ -411,12 +384,70 @@ class _AddPageState extends State<AddPage> {
                             textStyle: const TextStyle(
                               fontSize: 18,
                             )),
-                        child: const Text('Add to measurements'))
+                        child: const Text('Add to measurements')),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: size.height * 0.3,
+                      child: GridView.builder(
+                        itemCount: measurements.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          crossAxisCount: 3,
+                          childAspectRatio: 3,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return ElevatedButton(
+                              onPressed: () {
+                                debugPrint("clicked");
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      size.width * 0.32, size.height * 0.057),
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: AppColors.colorDark,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  textStyle: const TextStyle(
+                                    fontSize: 18,
+                                  )),
+                              child: const Text('up'));
+                        },
+                      ),
+                    )
                   ],
                 )
               ],
             ),
           )),
     ));
+  }
+
+  pickDate(BuildContext context) {
+    showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(primary: AppColors.colorDark),
+                textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                        backgroundColor: AppColors.colorDark,
+                        foregroundColor: Colors.white))),
+            child: child!,
+          );
+        }).then((value) {
+      if (value == null) {
+        return;
+      } else {
+        setState(() {
+          dateTime = value;
+        });
+      }
+    });
   }
 }
