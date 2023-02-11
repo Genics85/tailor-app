@@ -15,6 +15,7 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _styleController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _labelController = TextEditingController();
@@ -69,359 +70,388 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
+        bottom: false,
         child: Scaffold(
-      backgroundColor: AppColors.colorLight,
-      body: Container(
-          padding: const EdgeInsets.all(15),
-          width: size.width,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Text("Add new work", style: TextStyle(fontSize: 24)),
-                const SizedBox(height: 10),
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Name:",
-                      style: TextStyle(fontSize: 18),
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromARGB(242, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            borderSide: BorderSide.none),
-                        iconColor: AppColors.colorDark,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                        hintText: "Name")),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Phone:",
-                      style: TextStyle(fontSize: 18),
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                    controller: _phoneController,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromARGB(242, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            borderSide: BorderSide.none),
-                        iconColor: AppColors.colorDark,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                        hintText: "Phone number")),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          backgroundColor: AppColors.colorLight,
+          body: Container(
+              padding: const EdgeInsets.all(15),
+              width: size.width,
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    ElevatedButton(
-                        onPressed: pickStyle,
-                        style: ElevatedButton.styleFrom(
-                            fixedSize:
-                                Size(size.width * 0.45, size.height * 0.20),
-                            foregroundColor: AppColors.colorDark,
-                            backgroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            textStyle: const TextStyle(
-                              fontSize: 24,
-                            )),
-                        child: stylePic == null
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 50,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text("Pick Style")
-                                ],
-                              )
-                            : Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7)),
-                                width: size.width * 0.45,
-                                height: size.height * 0.20,
-                                child: Image.file(
-                                  File(stylePic!.path),
-                                  fit: BoxFit.cover,
-                                ))),
-                    ElevatedButton(
-                        onPressed: pickCloth,
-                        style: ElevatedButton.styleFrom(
-                            fixedSize:
-                                Size(size.width * 0.45, size.height * 0.20),
-                            foregroundColor: AppColors.colorDark,
-                            backgroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            textStyle: const TextStyle(
-                              fontSize: 24,
-                            )),
-                        child: clothPic == null
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 50,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text("Add Fabric")
-                                ],
-                              )
-                            : Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7)),
-                                width: size.width * 0.45,
-                                height: size.height * 0.20,
-                                child: Image.file(
-                                  File(clothPic!.path),
-                                  fit: BoxFit.cover,
-                                )))
-                  ],
-                ),
-                // ElevatedButton(
-                //     onPressed: saveImagesToLocalStorage,
-                //     child: Text("Upload")),
-                // localStyleImagePath.length > 2
-                //     ? Container(
-                //         height: 100,
-                //         width: 100,
-                //         decoration: BoxDecoration(
-                //             color: Colors.white,
-                //             image: DecorationImage(
-                //                 image:
-                //                     FileImage(File(localStyleImagePath)))))
-                //     : SizedBox(height: 5),
-                const SizedBox(height: 10),
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Description:",
-                      style: TextStyle(fontSize: 18),
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                    controller: _descriptionController,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromARGB(242, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            borderSide: BorderSide.none),
-                        iconColor: AppColors.colorDark,
-                        contentPadding: const EdgeInsets.all(15),
-                        hintText: "Description about work")),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: [
-                            const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Price:",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                                controller: _priceController,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: const Color.fromARGB(
-                                        242, 255, 255, 255),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(6),
-                                        borderSide: BorderSide.none),
-                                    iconColor: AppColors.colorDark,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    hintText: "Price"))
-                          ],
+                    const Text("Add new work", style: TextStyle(fontSize: 24)),
+                    const SizedBox(height: 10),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Name:",
+                          style: TextStyle(fontSize: 18),
                         )),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: [
-                            const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Due date:",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            ElevatedButton(
-                                onPressed: () => pickDate(context),
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(
-                                        size.width * 0.5, size.height * 0.057),
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: AppColors.colorDark,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    textStyle: const TextStyle(
-                                      fontSize: 18,
-                                    )),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.calendar_month),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                        '${dateTime.day}/${dateTime.month}/${dateTime.year}')
-                                  ],
-                                )),
-                          ],
-                        ))
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Measurements:",
-                      style: TextStyle(fontSize: 18),
-                    )),
-                const SizedBox(height: 10),
-                Column(
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              flex: 4,
-                              child: TextField(
-                                  controller: _labelController,
-                                  decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: const Color.fromARGB(
-                                          242, 255, 255, 255),
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          borderSide: BorderSide.none),
-                                      iconColor: AppColors.colorDark,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                      hintText: "Label"))),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                              flex: 4,
-                              child: TextField(
-                                  controller: _valueController,
-                                  decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: const Color.fromARGB(
-                                          242, 255, 255, 255),
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          borderSide: BorderSide.none),
-                                      iconColor: AppColors.colorDark,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                      hintText: "Value")))
-                        ]),
                     const SizedBox(
                       height: 10,
                     ),
-                    ElevatedButton(
-                        onPressed: () => addToMeasurement(
-                            _labelController.text, _valueController.text),
-                        style: ElevatedButton.styleFrom(
-                            minimumSize:
-                                Size(size.width * 0.95, size.height * 0.057),
-                            foregroundColor: Colors.white,
-                            backgroundColor: AppColors.colorDark,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            textStyle: const TextStyle(
-                              fontSize: 18,
+                    TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                            hintText: "Name")),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Phone:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                            hintText: "Phone number")),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Style:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 15),
+                            hintText: "Style name:")),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            onPressed: pickStyle,
+                            style: ElevatedButton.styleFrom(
+                                fixedSize:
+                                    Size(size.width * 0.45, size.height * 0.20),
+                                foregroundColor: AppColors.colorDark,
+                                backgroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                textStyle: const TextStyle(
+                                  fontSize: 24,
+                                )),
+                            child: stylePic == null
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 50,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Pick Style")
+                                    ],
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7)),
+                                    width: size.width * 0.45,
+                                    height: size.height * 0.20,
+                                    child: Image.file(
+                                      File(stylePic!.path),
+                                      fit: BoxFit.cover,
+                                    ))),
+                        ElevatedButton(
+                            onPressed: pickCloth,
+                            style: ElevatedButton.styleFrom(
+                                fixedSize:
+                                    Size(size.width * 0.45, size.height * 0.20),
+                                foregroundColor: AppColors.colorDark,
+                                backgroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                textStyle: const TextStyle(
+                                  fontSize: 24,
+                                )),
+                            child: clothPic == null
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 50,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Add Fabric")
+                                    ],
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7)),
+                                    width: size.width * 0.45,
+                                    height: size.height * 0.20,
+                                    child: Image.file(
+                                      File(clothPic!.path),
+                                      fit: BoxFit.cover,
+                                    )))
+                      ],
+                    ),
+                    // ElevatedButton(
+                    //     onPressed: saveImagesToLocalStorage,
+                    //     child: Text("Upload")),
+                    // localStyleImagePath.length > 2
+                    //     ? Container(
+                    //         height: 100,
+                    //         width: 100,
+                    //         decoration: BoxDecoration(
+                    //             color: Colors.white,
+                    //             image: DecorationImage(
+                    //                 image:
+                    //                     FileImage(File(localStyleImagePath)))))
+                    //     : SizedBox(height: 5),
+                    const SizedBox(height: 10),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Description:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                        controller: _descriptionController,
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color.fromARGB(242, 255, 255, 255),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(6),
+                                borderSide: BorderSide.none),
+                            iconColor: AppColors.colorDark,
+                            contentPadding: const EdgeInsets.all(15),
+                            hintText: "Description about work")),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            flex: 4,
+                            child: Column(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Price:",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                    controller: _priceController,
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: const Color.fromARGB(
+                                            242, 255, 255, 255),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            borderSide: BorderSide.none),
+                                        iconColor: AppColors.colorDark,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 15),
+                                        hintText: "Price"))
+                              ],
                             )),
-                        child: const Text('Add to measurements')),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      height: size.height * 0.3,
-                      child: GridView.builder(
-                        itemCount: measurements.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          crossAxisCount: 3,
-                          childAspectRatio: 3,
+                        const SizedBox(
+                          width: 10,
                         ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return ElevatedButton(
-                              onPressed: () {
-                                debugPrint("clicked");
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(
-                                      size.width * 0.32, size.height * 0.057),
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: AppColors.colorDark,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  textStyle: const TextStyle(
-                                    fontSize: 18,
-                                  )),
-                              child: const Text('up'));
-                        },
-                      ),
+                        Expanded(
+                            flex: 4,
+                            child: Column(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Due date:",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                ElevatedButton(
+                                    onPressed: () => pickDate(context),
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(size.width * 0.5,
+                                            size.height * 0.057),
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: AppColors.colorDark,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        textStyle: const TextStyle(
+                                          fontSize: 18,
+                                        )),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.calendar_month),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                            '${dateTime.day}/${dateTime.month}/${dateTime.year}')
+                                      ],
+                                    )),
+                              ],
+                            ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Measurements:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(height: 10),
+                    Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                  flex: 4,
+                                  child: TextField(
+                                      controller: _labelController,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: const Color.fromARGB(
+                                              242, 255, 255, 255),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              borderSide: BorderSide.none),
+                                          iconColor: AppColors.colorDark,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 15),
+                                          hintText: "Label"))),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  flex: 4,
+                                  child: TextField(
+                                      controller: _valueController,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: const Color.fromARGB(
+                                              242, 255, 255, 255),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              borderSide: BorderSide.none),
+                                          iconColor: AppColors.colorDark,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 15),
+                                          hintText: "Value")))
+                            ]),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () => addToMeasurement(
+                                _labelController.text, _valueController.text),
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(
+                                    size.width * 0.95, size.height * 0.057),
+                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.colorDark,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                )),
+                            child: const Text('Add to measurements')),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: size.height * 0.3,
+                          child: GridView.builder(
+                            itemCount: measurements.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              crossAxisCount: 3,
+                              childAspectRatio: 3,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              return ElevatedButton(
+                                  onPressed: () {
+                                    debugPrint("clicked");
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(size.width * 0.32,
+                                          size.height * 0.057),
+                                      foregroundColor: AppColors.colorDark,
+                                      backgroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 10),
+                                      textStyle: const TextStyle(
+                                        fontSize: 18,
+                                      )),
+                                  child: Text(
+                                      "${measurements[index][0]}  |  ${measurements[index][1]}"));
+                            },
+                          ),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
-            ),
-          )),
-    ));
+                ),
+              )),
+        ));
   }
 
   pickDate(BuildContext context) {

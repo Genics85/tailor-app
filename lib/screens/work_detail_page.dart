@@ -18,162 +18,181 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
             body: Container(
                 padding: const EdgeInsets.all(15),
                 width: size.width,
-                child: Column(children: [
-                  const Text(
-                    "Bra Akwasi",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                            width: size.width * 0.32,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(Icons.phone),
-                                Text("Call on phone")
-                              ],
-                            )),
-                        Container(
-                            width: size.width * 0.26,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [
-                                Icon(Icons.phone),
-                                Text("Whatsapp")
-                              ],
-                            )),
-                        Container(
-                            width: size.width * 0.32,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [
-                                Icon(
-                                  Icons.timer_outlined,
-                                  color: Colors.red,
-                                ),
-                                Text("Due in 3days")
-                              ],
-                            )),
-                      ]),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                            height: size.height * 0.28,
-                            width: size.width * 0.45,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
-                        Container(
-                            height: size.height * 0.28,
-                            width: size.width * 0.45,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png")))),
-                      ]),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Description:",
-                        style: TextStyle(fontSize: 18),
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: size.width * 0.95,
-                    height: size.height * 0.25,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: const Text(
-                      "Pariatur do excepteur elit sint velit culpa aliquip culpa mollit. Et pariatur commodo cillum ea id cupidatat magna pariatur. Nostrud excepteur adipisicing et cillum laborum incididunt non velit id aute cupidatat elit occaecat. Id magna veniam sint dolore adipisicing. Ipsum velit cillum ullamco magna.",
-                      style: TextStyle(fontSize: 16),
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    const Text(
+                      "Bra Akwasi",
+                      style: TextStyle(fontSize: 24),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Measurements:",
-                        style: TextStyle(fontSize: 18),
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: 5,
-                              itemBuilder: (BuildContext context, index) {
-                                return Container(
-                                  margin: const EdgeInsets.only(
-                                      bottom: 5, right: 5),
-                                  width: size.width * 0.45,
-                                  height: size.height * 0.09,
-                                  decoration:
-                                      const BoxDecoration(color: Colors.white),
-                                );
-                              }),
-                        )
-                      ],
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // Align(
-                  //   alignment: Alignment.bottomCenter,
-                  //   child: ElevatedButton(
-                  //       onPressed: () {},
-                  //       style: ElevatedButton.styleFrom(
-                  //           minimumSize:
-                  //               Size(size.width * 0.5, size.height * 0.065),
-                  //           foregroundColor: Colors.white,
-                  //           backgroundColor: Colors.green,
-                  //           padding: const EdgeInsets.symmetric(
-                  //               horizontal: 10, vertical: 10),
-                  //           textStyle: const TextStyle(
-                  //               fontSize: 24, fontWeight: FontWeight.bold)),
-                  //       child: const Text("Done")),
-                  // )
-                ]))));
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                              width: size.width * 0.32,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.phone),
+                                  Text("Call on phone")
+                                ],
+                              )),
+                          Container(
+                              width: size.width * 0.26,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Icon(Icons.phone),
+                                  Text("Whatsapp")
+                                ],
+                              )),
+                          Container(
+                              width: size.width * 0.32,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Icon(
+                                    Icons.timer_outlined,
+                                    color: Colors.red,
+                                  ),
+                                  Text("Due in 3days")
+                                ],
+                              )),
+                        ]),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "Caftan, Long sleeves",
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                              height: size.height * 0.28,
+                              width: size.width * 0.45,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  image: const DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
+                          Container(
+                              height: size.height * 0.28,
+                              width: size.width * 0.45,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  image: const DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png")))),
+                        ]),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Description:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      width: size.width * 0.95,
+                      height: size.height * 0.25,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6)),
+                      child: const Text(
+                        "Pariatur do excepteur elit sint velit culpa aliquip culpa mollit. Et pariatur commodo cillum ea id cupidatat magna pariatur. Nostrud excepteur adipisicing et cillum laborum incididunt non velit id aute cupidatat elit occaecat. Id magna veniam sint dolore adipisicing. Ipsum velit cillum ullamco magna.",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Measurements:",
+                          style: TextStyle(fontSize: 18),
+                        )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: size.height * 0.3,
+                      child: GridView.builder(
+                        itemCount: 4,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          crossAxisCount: 3,
+                          childAspectRatio: 3,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return ElevatedButton(
+                              onPressed: () {
+                                debugPrint("clicked");
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(
+                                      size.width * 0.32, size.height * 0.057),
+                                  foregroundColor: AppColors.colorDark,
+                                  backgroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  textStyle: const TextStyle(
+                                    fontSize: 18,
+                                  )),
+                              child: const Text("some"));
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomCenter,
+                    //   child: ElevatedButton(
+                    //       onPressed: () {},
+                    //       style: ElevatedButton.styleFrom(
+                    //           minimumSize:
+                    //               Size(size.width * 0.5, size.height * 0.065),
+                    //           foregroundColor: Colors.white,
+                    //           backgroundColor: Colors.green,
+                    //           padding: const EdgeInsets.symmetric(
+                    //               horizontal: 10, vertical: 10),
+                    //           textStyle: const TextStyle(
+                    //               fontSize: 24, fontWeight: FontWeight.bold)),
+                    //       child: const Text("Done")),
+                    // )
+                  ]),
+                ))));
   }
 }
