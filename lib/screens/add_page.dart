@@ -80,7 +80,7 @@ class _AddPageState extends State<AddPage> {
     final directory = await getApplicationDocumentsDirectory();
     String path = directory.path;
     final clothFileName = basename(clothPic!.path);
-    final styleFileName = basename(clothPic!.path);
+    final styleFileName = basename(stylePic!.path);
     await clothPic?.copy('$path/$clothFileName');
     await stylePic?.copy('$path/$styleFileName');
     setState(() {
@@ -160,8 +160,8 @@ class _AddPageState extends State<AddPage> {
                             style: ElevatedButton.styleFrom(
                                 fixedSize:
                                     Size(size.width * 0.45, size.height * 0.20),
-                                foregroundColor: Colors.white,
-                                backgroundColor: AppColors.colorDark,
+                                foregroundColor: AppColors.colorDark,
+                                backgroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 textStyle: const TextStyle(
@@ -227,19 +227,19 @@ class _AddPageState extends State<AddPage> {
                                     )))
                       ],
                     ),
-                    ElevatedButton(
-                        onPressed: saveImagesToLocalStorage,
-                        child: Text("Upload")),
-                    localStyleImagePath.length > 2
-                        ? Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                image: DecorationImage(
-                                    image:
-                                        FileImage(File(localStyleImagePath)))))
-                        : SizedBox(height: 5),
+                    // ElevatedButton(
+                    //     onPressed: saveImagesToLocalStorage,
+                    //     child: Text("Upload")),
+                    // localStyleImagePath.length > 2
+                    //     ? Container(
+                    //         height: 100,
+                    //         width: 100,
+                    //         decoration: BoxDecoration(
+                    //             color: Colors.white,
+                    //             image: DecorationImage(
+                    //                 image:
+                    //                     FileImage(File(localStyleImagePath)))))
+                    //     : SizedBox(height: 5),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,
@@ -327,10 +327,18 @@ class _AddPageState extends State<AddPage> {
                                         textStyle: const TextStyle(
                                           fontSize: 18,
                                         )),
-                                    child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            '${dateTime.day}/${dateTime.month}/${dateTime.year}'))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.calendar_month),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                            '${dateTime.day}/${dateTime.month}/${dateTime.year}')
+                                      ],
+                                    )),
                               ],
                             ))
                       ],
