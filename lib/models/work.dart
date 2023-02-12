@@ -8,7 +8,7 @@ class Work {
   final String price;
 
   const Work({
-    required this.id,
+    this.id,
     required this.name,
     required this.phone,
     required this.description,
@@ -25,14 +25,12 @@ class Work {
     };
   }
 
-  static Work fromJson(Map<String, Object?> json) {
-    return Work(
-        id: "_id" as int,
-        name: "name",
-        phone: "phone",
-        description: "description",
-        price: "price");
-  }
+  Work.fromJson(Map<String, dynamic> json)
+      : id = json["_id"],
+        name = json["name"],
+        phone = json["phone"],
+        description = json["description"],
+        price = json["price"];
 
   @override
   String toString() {

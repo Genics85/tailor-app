@@ -3,7 +3,6 @@ import "package:path/path.dart";
 import 'package:tailor/models/work.dart';
 
 class WorkDatabase {
-  
   WorkDatabase._init();
   static final WorkDatabase instance = WorkDatabase._init();
   static Database? _database;
@@ -22,7 +21,7 @@ class WorkDatabase {
 
   Future _createDB(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE testtable(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, price TEXT)');
+        'CREATE TABLE testtable(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,phone TEXT, description TEXT, price TEXT)');
   }
 
   Future<Work> create(Work work) async {
