@@ -15,7 +15,13 @@ class _SettingsPageState extends State<SettingsPage> {
       name: "Eugene",
       description: "Something you are not proud of doing",
       phone: "05467800343",
-      price: "45");
+      price: 45,
+      clothImg: 'https//something.com',
+      styleImg: "https//nothing.com",
+      dueDate: "mm/dd/yyyy",
+      measurements: "[23,34,45,5,56,76,]",
+      done: 1,
+      style: 'Caftan and Slit');
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
