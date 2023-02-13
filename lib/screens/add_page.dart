@@ -63,12 +63,12 @@ class _AddPageState extends State<AddPage> {
     final styleFileName = basename(stylePic!.path);
     await clothPic?.copy('$path/$clothFileName');
     await stylePic?.copy('$path/$styleFileName');
-    debugPrint(clothFileName);
-    debugPrint(styleFileName);
     debugPrint("####################################");
     setState(() {
       localStyleImagePath = '$path/$styleFileName';
       localClothImagePath = '$path/$clothFileName';
+      debugPrint(localStyleImagePath);
+      debugPrint(localClothImagePath);
     });
     debugPrint("**************************************");
   }
@@ -469,9 +469,12 @@ class _AddPageState extends State<AddPage> {
                           height: 10,
                         ),
                         ElevatedButton(
-                            onPressed: () {
-                              saveImagesToLocalStorage();
-                              WorkDatabase.instance.create(shirt);
+                            onPressed: () async {
+                              showAddDialog(context);
+                              // await saveImagesToLocalStorage();
+                              // debugPrint(localClothImagePath);
+                              // debugPrint(localStyleImagePath);
+                              // await WorkDatabase.instance.create(shirt);
                             },
                             style: ElevatedButton.styleFrom(
                                 minimumSize: Size(
@@ -493,6 +496,45 @@ class _AddPageState extends State<AddPage> {
                 ),
               )),
         ));
+  }
+
+  showAddDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible:false,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text('Want to add to works?'),
+              content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green[600],
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            )),
+                        child: const Text('Add')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.red[600],
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            )),
+                        child: const Text('Cancel')),
+                  ]),
+            ));
   }
 
   pickDate(BuildContext context) {
