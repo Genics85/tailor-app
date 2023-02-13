@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import '../database/sqllite.dart';
+import '../models/work.dart';
 import '../widgets/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,17 +26,18 @@ class _AddPageState extends State<AddPage> {
   addToMeasurement(String label, String value) {
     setState(() {
       measurements.add([label, value]);
-      _labelController.text = "";
-      _valueController.text = "";
+      // _labelController.text = "";
+      // _valueController.text = "";
     });
-    debugPrint("#########################");
-    debugPrint(measurements.toString());
   }
 
   File? stylePic;
   File? clothPic;
   DateTime dateTime = DateTime.now();
   String localStyleImagePath = "";
+  String localClothImagePath = "";
+  String styleSomething = "";
+  String clothSomething = "";
   List<List> measurements = [];
 
   pickStyle() async {
@@ -60,14 +63,32 @@ class _AddPageState extends State<AddPage> {
     final styleFileName = basename(stylePic!.path);
     await clothPic?.copy('$path/$clothFileName');
     await stylePic?.copy('$path/$styleFileName');
+    debugPrint(clothFileName);
+    debugPrint(styleFileName);
+    debugPrint("####################################");
     setState(() {
       localStyleImagePath = '$path/$styleFileName';
+      localClothImagePath = '$path/$clothFileName';
     });
-    return ['$path/$styleFileName', '$path/$clothFileName'];
+    debugPrint("**************************************");
   }
 
   @override
   Widget build(BuildContext context) {
+    var shirt = Work(
+        name: _nameController.text,
+        description: _descriptionController.text,
+        phone: _phoneController.text,
+        price: _priceController.text.isNotEmpty
+            ? int.parse(_priceController.text)
+            : 0,
+        clothImg: localClothImagePath,
+        styleImg: localStyleImagePath,
+        dueDate: '${dateTime.day}/${dateTime.month}/${dateTime.year}',
+        measurements: measurements.toString(),
+        done: 0,
+        style: _styleController.text);
+
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         bottom: false,
@@ -115,6 +136,7 @@ class _AddPageState extends State<AddPage> {
                       height: 10,
                     ),
                     TextField(
+                        keyboardType: TextInputType.number,
                         controller: _phoneController,
                         decoration: InputDecoration(
                             filled: true,
@@ -139,7 +161,7 @@ class _AddPageState extends State<AddPage> {
                       height: 10,
                     ),
                     TextField(
-                        controller: _phoneController,
+                        controller: _styleController,
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: const Color.fromARGB(242, 255, 255, 255),
@@ -228,10 +250,7 @@ class _AddPageState extends State<AddPage> {
                                     )))
                       ],
                     ),
-                    // ElevatedButton(
-                    //     onPressed: saveImagesToLocalStorage,
-                    //     child: Text("Upload")),
-                    // localStyleImagePath.length > 2
+                    // localStyleImagePath.isNotEmpty
                     //     ? Container(
                     //         height: 100,
                     //         width: 100,
@@ -416,7 +435,7 @@ class _AddPageState extends State<AddPage> {
                             child: const Text('Add to measurements')),
                         const SizedBox(height: 20),
                         SizedBox(
-                          height: size.height * 0.3,
+                          height: size.height * 0.2,
                           child: GridView.builder(
                             itemCount: measurements.length,
                             gridDelegate:
@@ -445,6 +464,28 @@ class _AddPageState extends State<AddPage> {
                                       "${measurements[index][0]}  |  ${measurements[index][1]}"));
                             },
                           ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              saveImagesToLocalStorage();
+                              WorkDatabase.instance.create(shirt);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(
+                                    size.width * 0.95, size.height * 0.057),
+                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.colorDark,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                )),
+                            child: const Text('Add Work')),
+                        SizedBox(
+                          height: size.height * 0.08,
                         )
                       ],
                     )

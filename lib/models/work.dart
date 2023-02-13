@@ -1,4 +1,3 @@
-import 'package:sqflite/sqflite.dart';
 
 class Work {
   final int? id;
@@ -57,6 +56,6 @@ class Work {
 
   @override
   String toString() {
-    return "Work{id:$id, name:$name, phone:$phone, description:$description, price:$price,style:$style , dueDate:$dueDate, measurements:$measurements, done:$done}";
+    return "Work{id:$id, name:$name, phone:$phone, description:$description, price:$price,style:$style , dueDate:$dueDate, measurements:$measurements, done:$done,styleImg:$styleImg,clothImg:$clothImg}";
   }
 }

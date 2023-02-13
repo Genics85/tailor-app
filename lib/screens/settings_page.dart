@@ -30,7 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Column(children: [
         ElevatedButton(
           onPressed: () {
-            debugPrint(WorkDatabase.instance.create(shirt).toString());
+            WorkDatabase.instance.create(shirt);
           },
           child: const Text("Upload here"),
         ),
