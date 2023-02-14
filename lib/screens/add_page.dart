@@ -64,12 +64,14 @@ class _AddPageState extends State<AddPage> {
     await clothPic?.copy('$path/$clothFileName');
     await stylePic?.copy('$path/$styleFileName');
     debugPrint("####################################");
+
     setState(() {
       localStyleImagePath = '$path/$styleFileName';
       localClothImagePath = '$path/$clothFileName';
       debugPrint(localStyleImagePath);
       debugPrint(localClothImagePath);
     });
+
     debugPrint("**************************************");
   }
 
@@ -250,16 +252,16 @@ class _AddPageState extends State<AddPage> {
                                     )))
                       ],
                     ),
-                    // localStyleImagePath.isNotEmpty
-                    //     ? Container(
-                    //         height: 100,
-                    //         width: 100,
-                    //         decoration: BoxDecoration(
-                    //             color: Colors.white,
-                    //             image: DecorationImage(
-                    //                 image:
-                    //                     FileImage(File(localStyleImagePath)))))
-                    //     : SizedBox(height: 5),
+                    localStyleImagePath.isNotEmpty
+                        ? Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(
+                                    image:
+                                        FileImage(File(localStyleImagePath)))))
+                        : SizedBox(height: 5),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,
@@ -469,9 +471,9 @@ class _AddPageState extends State<AddPage> {
                           height: 10,
                         ),
                         ElevatedButton(
-                            onPressed: () async {
-                              showAddDialog(context);
-                              // await saveImagesToLocalStorage();
+                            onPressed: () {
+                              saveImagesToLocalStorage();
+                              showAddDialog(context, shirt);
                               // debugPrint(localClothImagePath);
                               // debugPrint(localStyleImagePath);
                               // await WorkDatabase.instance.create(shirt);
@@ -498,17 +500,21 @@ class _AddPageState extends State<AddPage> {
         ));
   }
 
-  showAddDialog(BuildContext context) {
+  showAddDialog(BuildContext context, Work shirt) {
     return showDialog(
         context: context,
-        barrierDismissible:false,
+        barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
               title: const Text('Want to add to works?'),
               content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          WorkDatabase.instance.create(shirt);
+                          debugPrint(localClothImagePath);
+                          Navigator.pop(context);
+                        },
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),
                             foregroundColor: Colors.white,
