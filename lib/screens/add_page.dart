@@ -252,16 +252,16 @@ class _AddPageState extends State<AddPage> {
                                     )))
                       ],
                     ),
-                    localStyleImagePath.isNotEmpty
-                        ? Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                image: DecorationImage(
-                                    image:
-                                        FileImage(File(localStyleImagePath)))))
-                        : SizedBox(height: 5),
+                    // localStyleImagePath.isNotEmpty
+                    //     ? Container(
+                    //         height: 100,
+                    //         width: 100,
+                    //         decoration: BoxDecoration(
+                    //             color: Colors.white,
+                    //             image: DecorationImage(
+                    //                 image:
+                    //                     FileImage(File(localStyleImagePath)))))
+                    //     :const SizedBox(height: 5),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,
