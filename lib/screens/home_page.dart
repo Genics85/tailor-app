@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tailor/screens/work_detail_page.dart';
 import '../database/sqllite.dart';
@@ -59,19 +61,17 @@ class _HomePageState extends State<HomePage> {
                                         margin: const EdgeInsets.only(right: 6),
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
-                                        decoration: const BoxDecoration(
+                                        decoration:  BoxDecoration(
                                             image: DecorationImage(
-                                                image: NetworkImage(
-                                                    "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
+                                                image: FileImage(File(work.styleImg))))),
                                     Container(
                                         margin: const EdgeInsets.only(right: 6),
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
                                             image: DecorationImage(
                                                 fit: BoxFit.fill,
-                                                image: NetworkImage(
-                                                    "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png")))),
+                                                image: FileImage(File(work.clothImg))))),
                                     Container(
                                       margin: const EdgeInsets.only(right: 5),
                                       child: Column(
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                                         children: [
                                           Text(
                                             work.name,
-                                            style:const TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           ),
