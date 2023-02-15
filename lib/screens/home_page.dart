@@ -61,9 +61,10 @@ class _HomePageState extends State<HomePage> {
                                         margin: const EdgeInsets.only(right: 6),
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
-                                        decoration:  BoxDecoration(
+                                        decoration: BoxDecoration(
                                             image: DecorationImage(
-                                                image: FileImage(File(work.styleImg))))),
+                                                image: FileImage(
+                                                    File(work.styleImg))))),
                                     Container(
                                         margin: const EdgeInsets.only(right: 6),
                                         height: size.height * 0.075,
@@ -71,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
                                                 fit: BoxFit.fill,
-                                                image: FileImage(File(work.clothImg))))),
+                                                image: FileImage(
+                                                    File(work.clothImg))))),
                                     Container(
                                       margin: const EdgeInsets.only(right: 5),
                                       child: Column(
@@ -86,9 +88,10 @@ class _HomePageState extends State<HomePage> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           ),
-                                          SizedBox(height: 9),
-                                          const Text(
-                                              "Officia velit fugiat laborum some")
+                                          const SizedBox(height: 9),
+                                          Text(work.description.length < 20
+                                              ? work.description
+                                              : "${work.description.substring(0, 30)}...")
                                         ],
                                       ),
                                     ),
