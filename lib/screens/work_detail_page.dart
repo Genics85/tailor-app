@@ -1,9 +1,14 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../models/work.dart';
 import '../widgets/colors.dart';
 
 class WorkDetailsPage extends StatefulWidget {
-  const WorkDetailsPage({super.key});
-
+  const WorkDetailsPage(
+      {super.key, required this.work, required this.daysLeft});
+  final daysLeft;
+  final Work work;
   @override
   State<WorkDetailsPage> createState() => _WorkDetailsPageState();
 }
@@ -11,6 +16,17 @@ class WorkDetailsPage extends StatefulWidget {
 class _WorkDetailsPageState extends State<WorkDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    List<List<dynamic>> measurementsToArray(String arr) {
+      final regExp = RegExp(r'(?:\[)?(\[[^\]]*?\](?:,?))(?:\])?');
+      final result = regExp
+          .allMatches(arr)
+          .map((m) => m.group(0))
+          .map((String? item) => item?.replaceAll(RegExp(r'[\ [\],]'), ''))
+          .map((m) => [m])
+          .toList();
+      return result;
+    }
+
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
@@ -20,9 +36,24 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                 width: size.width,
                 child: SingleChildScrollView(
                   child: Column(children: [
-                    const Text(
-                      "Bra Akwasi",
-                      style: TextStyle(fontSize: 24),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.arrow_back)),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              widget.work.name,
+                              style: const TextStyle(fontSize: 24),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -66,22 +97,28 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
-                                children: const [
-                                  Icon(
+                                children: [
+                                  const Icon(
                                     Icons.timer_outlined,
                                     color: Colors.red,
                                   ),
-                                  Text("Due in 3days")
+                                  Text("Due in ${widget.daysLeft} days")
                                 ],
                               )),
                         ]),
-
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      "Caftan, Long sleeves",
-                      style: TextStyle(fontSize: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.work.style,
+                          style: const TextStyle(fontSize: 24),
+                        ),
+                        Text("GHC ${widget.work.price.toString()}",
+                            style: const TextStyle(fontSize: 24))
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -94,19 +131,19 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                               width: size.width * 0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  image: const DecorationImage(
+                                  image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "https://www.tongesy.com/content/images/2022/07/DALL-E-2022-07-28-08.55.35---Man-making-coffee-in-style-of-Picasso--painting.png")))),
+                                      image: FileImage(
+                                          File(widget.work.styleImg))))),
                           Container(
                               height: size.height * 0.28,
                               width: size.width * 0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  image: const DecorationImage(
+                                  image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "https://miro.medium.com/max/1024/1*e2-GB_Hdylczkj5PHh-lJQ.png")))),
+                                      image: FileImage(
+                                          File(widget.work.clothImg))))),
                         ]),
                     const SizedBox(
                       height: 10,
@@ -123,13 +160,13 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       width: size.width * 0.95,
-                      height: size.height * 0.25,
+                      height: widget.work.description.length * 0.8 + 25,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(6)),
-                      child: const Text(
-                        "Pariatur do excepteur elit sint velit culpa aliquip culpa mollit. Et pariatur commodo cillum ea id cupidatat magna pariatur. Nostrud excepteur adipisicing et cillum laborum incididunt non velit id aute cupidatat elit occaecat. Id magna veniam sint dolore adipisicing. Ipsum velit cillum ullamco magna.",
-                        style: TextStyle(fontSize: 16),
+                      child: Text(
+                        widget.work.description,
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                     const SizedBox(
@@ -145,9 +182,9 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                       height: 10,
                     ),
                     SizedBox(
-                      height: size.height * 0.3,
+                      height: size.height * 0.2,
                       child: GridView.builder(
-                        itemCount: 4,
+                        itemCount: measurementsToArray(widget.work.measurements).length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           mainAxisSpacing: 10,
@@ -170,28 +207,30 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                   textStyle: const TextStyle(
                                     fontSize: 18,
                                   )),
-                              child: const Text("some"));
+                              child: Text(
+                                  measurementsToArray(widget.work.measurements)[index][0]
+                                      .toString()));
                         },
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    // Align(
-                    //   alignment: Alignment.bottomCenter,
-                    //   child: ElevatedButton(
-                    //       onPressed: () {},
-                    //       style: ElevatedButton.styleFrom(
-                    //           minimumSize:
-                    //               Size(size.width * 0.5, size.height * 0.065),
-                    //           foregroundColor: Colors.white,
-                    //           backgroundColor: Colors.green,
-                    //           padding: const EdgeInsets.symmetric(
-                    //               horizontal: 10, vertical: 10),
-                    //           textStyle: const TextStyle(
-                    //               fontSize: 24, fontWeight: FontWeight.bold)),
-                    //       child: const Text("Done")),
-                    // )
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            minimumSize:
+                                Size(size.width * 0.95, size.height * 0.065),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold)),
+                        child: const Text("Done")),
+                    SizedBox(
+                      height: size.height * 0.05,
+                    )
                   ]),
                 ))));
   }

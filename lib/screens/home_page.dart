@@ -90,7 +90,11 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const WorkDetailsPage()));
+                                                WorkDetailsPage(
+                                                  work: work,
+                                                  daysLeft: daysLeftCalculator(
+                                                      work.dueDate),
+                                                )));
                                   },
                                   style: ElevatedButton.styleFrom(
                                       fixedSize:
@@ -148,12 +152,17 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children:  [
-                                            Icon(Icons.timer_outlined),
-                                            SizedBox(height: 9),
-                                            Text(daysLeftCalculator(work.dueDate),
+                                          children: [
+                                            const Icon(Icons.timer_outlined),
+                                            const SizedBox(height: 9),
+                                            Text(
+                                                daysLeftCalculator(
+                                                    work.dueDate),
                                                 style: TextStyle(
                                                   fontSize: 18,
+                                                  color: work.daysLeft < 0
+                                                      ? Colors.red
+                                                      : Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                 ))
                                           ],
