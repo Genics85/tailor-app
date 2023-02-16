@@ -16,6 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
 
+  int daysLeftCalculator(String lastDay) {
+    DateTime currentDate = DateTime.now();
+    DateTime dueDate = DateTime.parse(lastDay);
+
+    var difference = ((dueDate.difference(currentDate).inHours / 24).round());
+    return difference;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
