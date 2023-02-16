@@ -7,6 +7,7 @@ class Work {
   final String clothImg;
   final String description;
   final String dueDate;
+  final int daysLeft;
   final String measurements;
   final int price;
   final int? done;
@@ -17,6 +18,7 @@ class Work {
       required this.styleImg,
       required this.clothImg,
       required this.dueDate,
+      required this.daysLeft,
       required this.measurements,
       required this.name,
       required this.phone,
@@ -35,6 +37,7 @@ class Work {
       "description": description,
       "price": price,
       "dueDate": dueDate,
+      "daysLeft":daysLeft,
       "measurements": measurements,
       "done": done
     };
@@ -50,6 +53,7 @@ class Work {
         description = json["description"],
         price = json["price"],
         dueDate = json["dueDate"],
+        daysLeft=json["daysLeft"],
         measurements = json["measurements"],
         done = json["done"];
 

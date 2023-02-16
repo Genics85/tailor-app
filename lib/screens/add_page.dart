@@ -31,6 +31,13 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
+    int daysLeftCalculator(String lastDay) {
+    DateTime currentDate = DateTime.now();
+    DateTime dueDate = DateTime.parse(lastDay);
+    var difference = ((dueDate.difference(currentDate).inHours / 24).round());
+    return difference;
+  }
+
   File? stylePic;
   File? clothPic;
   DateTime dateTime = DateTime.now();
@@ -87,6 +94,7 @@ class _AddPageState extends State<AddPage> {
         clothImg: localClothImagePath,
         styleImg: localStyleImagePath,
         dueDate:dateTime.toString(),
+        daysLeft:daysLeftCalculator(dateTime.toString()),
         measurements: measurements.toString(),
         done: 0,
         style: _styleController.text);
