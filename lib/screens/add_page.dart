@@ -23,6 +23,12 @@ class _AddPageState extends State<AddPage> {
   final TextEditingController _labelController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
 
+  int daysLeftCalculator() {
+    DateTime currentDate = DateTime.now();
+    var difference = ((dateTime.difference(currentDate).inHours / 24).round());
+    return difference;
+  }
+
   addToMeasurement(String label, String value) {
     setState(() {
       measurements.add([label, value]);
@@ -88,6 +94,7 @@ class _AddPageState extends State<AddPage> {
         styleImg: localStyleImagePath,
         dueDate:
             '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}:${dateTime.second}',
+        daysLeft: daysLeftCalculator(),
         measurements: measurements.toString(),
         done: 0,
         style: _styleController.text);

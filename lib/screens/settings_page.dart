@@ -19,6 +19,7 @@ class _SettingsPageState extends State<SettingsPage> {
       clothImg: 'https//something.com',
       styleImg: "https//nothing.com",
       dueDate: "mm/dd/yyyy",
+      daysLeft: 4,
       measurements: "[23,34,45,5,56,76,]",
       done: 1,
       style: 'Caftan and Slit');

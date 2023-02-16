@@ -21,7 +21,7 @@ class WorkDatabase {
 
   Future _createDB(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE testtable(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,phone TEXT,style TEXT,styleImg TEXT,clothImg TEXT, description TEXT, price INTEGER,dueDate TEXT,measurements TEXT,done INTEGER)');
+        'CREATE TABLE testtable(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,phone TEXT,style TEXT,styleImg TEXT,clothImg TEXT, description TEXT, price INTEGER,dueDate TEXT,daysLeft INTEGER, measurements TEXT,done INTEGER)');
   }
 
   Future<Work> create(Work work) async {

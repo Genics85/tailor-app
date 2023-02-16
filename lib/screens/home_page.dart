@@ -16,12 +16,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
 
-  int daysLeftCalculator(String lastDay) {
+  String daysLeftCalculator(String lastDay) {
     DateTime currentDate = DateTime.now();
     DateTime dueDate = DateTime.parse(lastDay);
-
     var difference = ((dueDate.difference(currentDate).inHours / 24).round());
-    return difference;
+    return difference.toString();
   }
 
   @override
@@ -149,10 +148,10 @@ class _HomePageState extends State<HomePage> {
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: const [
+                                          children:  [
                                             Icon(Icons.timer_outlined),
                                             SizedBox(height: 9),
-                                            Text("3",
+                                            Text(daysLeftCalculator(work.dueDate),
                                                 style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
