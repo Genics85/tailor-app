@@ -23,6 +23,45 @@ class _HomePageState extends State<HomePage> {
         bottom: false,
         child: Scaffold(
             backgroundColor: AppColors.colorLight,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(65),
+              child: NestedScrollView(
+                floatHeaderSlivers: true,
+                headerSliverBuilder: ((context, innerBoxIsScrolled) => [
+                      SliverAppBar(
+                        expandedHeight: size.height * 0.05,
+                        collapsedHeight: size.height * 0.2,
+                        backgroundColor: AppColors.colorDark,
+                        floating: true,
+                        centerTitle: true,
+                        title: Container(
+                          margin: const EdgeInsets.only(top: 15),
+                          width: size.width * 0.95,
+                          height: size.height * 0.04,
+                          child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor:
+                                      const Color.fromARGB(242, 255, 255, 255),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                      borderSide: BorderSide.none),
+                                  iconColor: AppColors.colorDark,
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.search),
+                                    onPressed: () {},
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  isDense: true,
+                                  hintText: "Search")),
+                        ),
+                      )
+                    ]),
+                body: const SizedBox(height: 1),
+              ),
+            ),
             body: SizedBox(
               width: size.width,
               child: FutureBuilder<List<Work>>(
@@ -89,51 +128,57 @@ class _HomePageState extends State<HomePage> {
                                                 fontSize: 16),
                                           ),
                                           const SizedBox(height: 9),
-                                          Text(work.description.length < 20
+                                          Text(work.description.length < 30
                                               ? work.description
                                               : "${work.description.substring(0, 30)}...")
                                         ],
                                       ),
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(Icons.timer_outlined),
-                                        SizedBox(height: 9),
-                                        Text("3",
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ))
-                                      ],
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Icon(Icons.timer_outlined),
+                                            SizedBox(height: 9),
+                                            Text("3",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
                                     )
                                   ]),
                                 ),
                               );
                             }),
-                        Container(
-                          margin: const EdgeInsets.only(top: 15),
-                          width: size.width * 0.9,
-                          child: TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor:
-                                      const Color.fromARGB(242, 255, 255, 255),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                      borderSide: BorderSide.none),
-                                  iconColor: AppColors.colorDark,
-                                  suffixIcon: IconButton(
-                                    icon: const Icon(Icons.search),
-                                    onPressed: () {},
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  isDense: true,
-                                  hintText: "Search")),
-                        ),
+                        // Container(
+                        //   margin: const EdgeInsets.only(top: 15),
+                        //   width: size.width * 0.9,
+                        //   child: TextField(
+                        //       controller: _searchController,
+                        //       decoration: InputDecoration(
+                        //           filled: true,
+                        //           fillColor:
+                        //               const Color.fromARGB(242, 255, 255, 255),
+                        //           border: OutlineInputBorder(
+                        //               borderRadius: BorderRadius.circular(50),
+                        //               borderSide: BorderSide.none),
+                        //           iconColor: AppColors.colorDark,
+                        //           suffixIcon: IconButton(
+                        //             icon: const Icon(Icons.search),
+                        //             onPressed: () {},
+                        //           ),
+                        //           contentPadding: const EdgeInsets.symmetric(
+                        //               horizontal: 15),
+                        //           isDense: true,
+                        //           hintText: "Search")),
+                        // ),
                       ]);
                     } else {
                       return Center(

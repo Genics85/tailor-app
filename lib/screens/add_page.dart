@@ -86,7 +86,8 @@ class _AddPageState extends State<AddPage> {
             : 0,
         clothImg: localClothImagePath,
         styleImg: localStyleImagePath,
-        dueDate: '${dateTime.day}/${dateTime.month}/${dateTime.year}',
+        dueDate:
+            '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}:${dateTime.second}',
         measurements: measurements.toString(),
         done: 0,
         style: _styleController.text);
