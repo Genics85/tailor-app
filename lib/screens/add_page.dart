@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:tailor/widgets/big_text.dart';
 import '../database/sqllite.dart';
 import '../models/work.dart';
 import '../widgets/colors.dart';
@@ -136,7 +137,7 @@ class _AddPageState extends State<AddPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const Text("Add new work", style: TextStyle(fontSize: 24)),
+                    const BigText(text: "Add new work"),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,

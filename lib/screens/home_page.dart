@@ -112,27 +112,17 @@ class _HomePageState extends State<HomePage> {
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
                                         decoration: BoxDecoration(
-                                            image: File(work.styleImg)
-                                                    .existsSync()
-                                                ? DecorationImage(
-                                                    image: FileImage(
-                                                        File(work.styleImg)))
-                                                : const DecorationImage(
-                                                    image: NetworkImage(
-                                                        "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
+                                            image: DecorationImage(
+                                                image: FileImage(
+                                                    File(work.styleImg))))),
                                     Container(
                                         margin: const EdgeInsets.only(right: 6),
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
                                         decoration: BoxDecoration(
-                                            image: File(work.clothImg)
-                                                    .existsSync()
-                                                ? DecorationImage(
-                                                    image: FileImage(
-                                                        File(work.clothImg)))
-                                                : const DecorationImage(
-                                                    image: NetworkImage(
-                                                        "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
+                                            image: DecorationImage(
+                                                image: FileImage(
+                                                    File(work.clothImg))))),
                                     Container(
                                       margin: const EdgeInsets.only(right: 5),
                                       child: Column(
@@ -182,31 +172,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             }),
-                        // Container(
-                        //   margin: const EdgeInsets.only(top: 15),
-                        //   width: size.width * 0.9,
-                        //   child: TextField(
-                        //       controller: _searchController,
-                        //       decoration: InputDecoration(
-                        //           filled: true,
-                        //           fillColor:
-                        //               const Color.fromARGB(242, 255, 255, 255),
-                        //           border: OutlineInputBorder(
-                        //               borderRadius: BorderRadius.circular(50),
-                        //               borderSide: BorderSide.none),
-                        //           iconColor: AppColors.colorDark,
-                        //           suffixIcon: IconButton(
-                        //             icon: const Icon(Icons.search),
-                        //             onPressed: () {},
-                        //           ),
-                        //           contentPadding: const EdgeInsets.symmetric(
-                        //               horizontal: 15),
-                        //           isDense: true,
-                        //           hintText: "Search")),
-                        // ),
                       ]);
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }

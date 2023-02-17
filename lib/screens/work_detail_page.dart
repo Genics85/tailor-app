@@ -168,27 +168,19 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                               width: size.width * 0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  image: File(widget.work.styleImg).existsSync()
-                                      ? DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: FileImage(
-                                              File(widget.work.styleImg)))
-                                      : const DecorationImage(
-                                          image: NetworkImage(
-                                              "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(widget.work.styleImg))))),
                           Container(
                               height: size.height * 0.28,
                               width: size.width * 0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  image: File(widget.work.clothImg).existsSync()
-                                      ? DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: FileImage(
-                                              File(widget.work.clothImg)))
-                                      : const DecorationImage(
-                                          image: NetworkImage(
-                                              "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(
+                                          File(widget.work.clothImg))))),
                         ]),
                     const SizedBox(
                       height: 10,

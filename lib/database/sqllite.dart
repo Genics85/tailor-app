@@ -6,6 +6,7 @@ class WorkDatabase {
   WorkDatabase._init();
   static final WorkDatabase instance = WorkDatabase._init();
   static Database? _database;
+  String tableName = "testtable";
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -26,30 +27,37 @@ class WorkDatabase {
 
   Future<Work> create(Work work) async {
     final db = await instance.database;
-    final id = await db.insert("testtable", work.toMap());
+    final id = await db.insert(tableName, work.toMap());
     return work;
   }
 
   Future<List<Work>> getAllWorks() async {
     final db = await instance.database;
-    final result = await db.query("testtable",orderBy: "daysLeft",where: "done =?",whereArgs: [0]);
+    final result = await db.query(tableName,
+        orderBy: "daysLeft", where: "done =?", whereArgs: [0]);
+    return result.map((json) => Work.fromJson(json)).toList();
+  }
+
+  Future<List<Work>> getAllDoneWorks() async {
+    final db = await instance.database;
+    final result = await db.query(tableName, where: "done =?", whereArgs: [1]);
     return result.map((json) => Work.fromJson(json)).toList();
   }
 
   Future<int> update(Work work) async {
     final db = await instance.database;
-    return db.update("testtable", work.toMap(),
+    return db.update(tableName, work.toMap(),
         where: "_id = ?", whereArgs: [work.id]);
   }
 
   Future<int> delete(int id) async {
     final db = await instance.database;
-    return await db.delete("testtable", where: "_id = ?", whereArgs: [id]);
+    return await db.delete(tableName, where: "_id = ?", whereArgs: [id]);
   }
 
   Future<Work> getWork(int id) async {
     final db = await instance.database;
-    final maps = await db.query("testtable",
+    final maps = await db.query(tableName,
         columns: ["_id", "name", "description", "price"],
         where: "_id =?*",
         whereArgs: [id]);
