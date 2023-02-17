@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tailor/database/sqllite.dart';
+import 'package:tailor/screens/landing_page.dart';
 import '../models/work.dart';
 import '../widgets/colors.dart';
 import '../widgets/snackbar.dart';
@@ -167,19 +168,27 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                               width: size.width * 0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(widget.work.styleImg))))),
+                                  image: File(widget.work.styleImg).existsSync()
+                                      ? DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: FileImage(
+                                              File(widget.work.styleImg)))
+                                      : const DecorationImage(
+                                          image: NetworkImage(
+                                              "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
                           Container(
                               height: size.height * 0.28,
                               width: size.width * 0.45,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(
-                                          File(widget.work.clothImg))))),
+                                  image: File(widget.work.clothImg).existsSync()
+                                      ? DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: FileImage(
+                                              File(widget.work.clothImg)))
+                                      : const DecorationImage(
+                                          image: NetworkImage(
+                                              "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
                         ]),
                     const SizedBox(
                       height: 10,
@@ -255,9 +264,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          WorkDatabase.instance.update(shirt);
-                          showSnackBar(
-                              context, "Work marked as done", Colors.green);
+                          showDoneDialog(context, shirt);
                         },
                         style: ElevatedButton.styleFrom(
                             minimumSize:
@@ -290,9 +297,55 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                         onPressed: () {
                           deleteFiles(File(stylePic), File(clothPic));
                           WorkDatabase.instance.delete(widget.work.id!);
-                          Navigator.pop(context);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const LandingPage()));
                           showSnackBar(
                               context, "Work successfully deleted", Colors.red);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green[600],
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            )),
+                        child: const Text('Continue')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.red[600],
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            )),
+                        child: const Text('Cancel')),
+                  ]),
+            ));
+  }
+
+  showDoneDialog(BuildContext context, Work shirt) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text("Want to mark this work as done?"),
+              content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          WorkDatabase.instance.update(shirt);
+                          showSnackBar(
+                              context, "Work marked as done", Colors.green);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const LandingPage()));
                         },
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),

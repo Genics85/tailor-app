@@ -112,18 +112,27 @@ class _HomePageState extends State<HomePage> {
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
                                         decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: FileImage(
-                                                    File(work.styleImg))))),
+                                            image: File(work.styleImg)
+                                                    .existsSync()
+                                                ? DecorationImage(
+                                                    image: FileImage(
+                                                        File(work.styleImg)))
+                                                : const DecorationImage(
+                                                    image: NetworkImage(
+                                                        "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
                                     Container(
                                         margin: const EdgeInsets.only(right: 6),
                                         height: size.height * 0.075,
                                         width: size.width * 0.15,
                                         decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: FileImage(
-                                                    File(work.clothImg))))),
+                                            image: File(work.clothImg)
+                                                    .existsSync()
+                                                ? DecorationImage(
+                                                    image: FileImage(
+                                                        File(work.clothImg)))
+                                                : const DecorationImage(
+                                                    image: NetworkImage(
+                                                        "https://thumbs.dreamstime.com/z/tie-line-icon-prohibition-red-circle-no-business-style-dress-ban-stop-sign-code-forbidden-symbol-vector-illustration-179982892.jpg")))),
                                     Container(
                                       margin: const EdgeInsets.only(right: 5),
                                       child: Column(

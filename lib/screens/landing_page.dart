@@ -28,7 +28,7 @@ class _LandingPageState extends State<LandingPage> {
     Icons.photo_library_outlined,
     Icons.settings,
   ];
-  List iconTitle = ["Add", "Finance", "Home", "Posts", "Settings"];
+  List iconTitle = ["Add", "Stats", "Home", "Posts", "Settings"];
   int currentIndex = 2;
   @override
   Widget build(BuildContext context) {

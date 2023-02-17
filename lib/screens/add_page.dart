@@ -17,7 +17,6 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _styleController = TextEditingController();
@@ -287,16 +286,6 @@ class _AddPageState extends State<AddPage> {
                                     )))
                       ],
                     ),
-                    // localStyleImagePath.isNotEmpty
-                    //     ? Container(
-                    //         height: 100,
-                    //         width: 100,
-                    //         decoration: BoxDecoration(
-                    //             color: Colors.white,
-                    //             image: DecorationImage(
-                    //                 image:
-                    //                     FileImage(File(localStyleImagePath)))))
-                    //     :const SizedBox(height: 5),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,
@@ -544,10 +533,6 @@ class _AddPageState extends State<AddPage> {
                               } else {
                                 showAddDialog(context, shirt);
                               }
-
-                              // debugPrint(localClothImagePath);
-                              // debugPrint(localStyleImagePath);
-                              // await WorkDatabase.instance.create(shirt);
                             },
                             style: ElevatedButton.styleFrom(
                                 minimumSize: Size(
