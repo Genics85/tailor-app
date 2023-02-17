@@ -116,7 +116,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                           widget.work.style,
                           style: const TextStyle(fontSize: 24),
                         ),
-                        Text("GHC ${widget.work.price.toString()}",
+                        Text("GH₵ ${widget.work.price.toString()}",
                             style: const TextStyle(fontSize: 24))
                       ],
                     ),
@@ -160,7 +160,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       width: size.width * 0.95,
-                      height: widget.work.description.length * 0.8 + 25,
+                      height: widget.work.description.length * 0.5 + 45,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(6)),
@@ -184,7 +184,8 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     SizedBox(
                       height: size.height * 0.2,
                       child: GridView.builder(
-                        itemCount: measurementsToArray(widget.work.measurements).length,
+                        itemCount: measurementsToArray(widget.work.measurements)
+                            .length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           mainAxisSpacing: 10,
@@ -207,9 +208,9 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                   textStyle: const TextStyle(
                                     fontSize: 18,
                                   )),
-                              child: Text(
-                                  measurementsToArray(widget.work.measurements)[index][0]
-                                      .toString()));
+                              child: Text(measurementsToArray(
+                                      widget.work.measurements)[index][0]
+                                  .toString()));
                         },
                       ),
                     ),

@@ -7,6 +7,8 @@ import '../models/work.dart';
 import '../widgets/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../widgets/snackbar.dart';
+
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
 
@@ -26,12 +28,12 @@ class _AddPageState extends State<AddPage> {
   addToMeasurement(String label, String value) {
     setState(() {
       measurements.add([label, value]);
-      // _labelController.text = "";
-      // _valueController.text = "";
+      _labelController.text = "";
+      _valueController.text = "";
     });
   }
 
-    int daysLeftCalculator(String lastDay) {
+  int daysLeftCalculator(String lastDay) {
     DateTime currentDate = DateTime.now();
     DateTime dueDate = DateTime.parse(lastDay);
     var difference = ((dueDate.difference(currentDate).inHours / 24).round());
@@ -46,6 +48,23 @@ class _AddPageState extends State<AddPage> {
   String styleSomething = "";
   String clothSomething = "";
   List<List> measurements = [];
+  bool isChecked = false;
+
+  resetInputs() {
+    setState(() {
+      _nameController.text = "";
+      _phoneController.text = "";
+      _styleController.text = "";
+      localClothImagePath = "";
+      localStyleImagePath = "";
+      _descriptionController.text = "";
+      dateTime = DateTime.now();
+      measurements = [];
+      isChecked = false;
+      _labelController.text = "";
+      _valueController.text = "";
+    });
+  }
 
   pickStyle() async {
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -70,16 +89,12 @@ class _AddPageState extends State<AddPage> {
     final styleFileName = basename(stylePic!.path);
     await clothPic?.copy('$path/$clothFileName');
     await stylePic?.copy('$path/$styleFileName');
-    debugPrint("####################################");
-
     setState(() {
       localStyleImagePath = '$path/$styleFileName';
       localClothImagePath = '$path/$clothFileName';
       debugPrint(localStyleImagePath);
       debugPrint(localClothImagePath);
     });
-
-    debugPrint("**************************************");
   }
 
   @override
@@ -93,8 +108,8 @@ class _AddPageState extends State<AddPage> {
             : 0,
         clothImg: localClothImagePath,
         styleImg: localStyleImagePath,
-        dueDate:dateTime.toString(),
-        daysLeft:daysLeftCalculator(dateTime.toString()),
+        dueDate: dateTime.toString(),
+        daysLeft: daysLeftCalculator(dateTime.toString()),
         measurements: measurements.toString(),
         done: 0,
         style: _styleController.text);
@@ -312,8 +327,10 @@ class _AddPageState extends State<AddPage> {
                                   height: 10,
                                 ),
                                 TextField(
+                                    keyboardType: TextInputType.number,
                                     controller: _priceController,
                                     decoration: InputDecoration(
+                                        suffix: const Text("GH₵"),
                                         filled: true,
                                         fillColor: const Color.fromARGB(
                                             242, 255, 255, 255),
@@ -411,8 +428,10 @@ class _AddPageState extends State<AddPage> {
                               Expanded(
                                   flex: 4,
                                   child: TextField(
+                                      keyboardType: TextInputType.number,
                                       controller: _valueController,
                                       decoration: InputDecoration(
+                                          suffix: const Text("in"),
                                           filled: true,
                                           fillColor: const Color.fromARGB(
                                               242, 255, 255, 255),
@@ -431,7 +450,8 @@ class _AddPageState extends State<AddPage> {
                         ),
                         ElevatedButton(
                             onPressed: () => addToMeasurement(
-                                _labelController.text, _valueController.text),
+                                _labelController.text.toUpperCase(),
+                                _valueController.text),
                             style: ElevatedButton.styleFrom(
                                 minimumSize: Size(
                                     size.width * 0.95, size.height * 0.057),
@@ -457,9 +477,16 @@ class _AddPageState extends State<AddPage> {
                             ),
                             itemBuilder: (BuildContext context, int index) {
                               return ElevatedButton(
-                                  onPressed: () {
-                                    debugPrint("clicked");
+                                  onLongPress: () {
+                                    _labelController.text =
+                                        measurements[index][0];
+                                    _valueController.text =
+                                        measurements[index][1];
+                                    setState(() {
+                                      measurements.removeAt(index);
+                                    });
                                   },
+                                  onPressed: () {},
                                   style: ElevatedButton.styleFrom(
                                       minimumSize: Size(size.width * 0.32,
                                           size.height * 0.057),
@@ -478,10 +505,35 @@ class _AddPageState extends State<AddPage> {
                         const SizedBox(
                           height: 10,
                         ),
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: isChecked,
+                              activeColor: AppColors.colorDark,
+                              onChanged: (value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                                debugPrint(isChecked.toString());
+                                if (isChecked == true) {
+                                  saveImagesToLocalStorage();
+                                }
+                              },
+                            ),
+                            const Text("Confirm all details before adding work")
+                          ],
+                        ),
                         ElevatedButton(
                             onPressed: () {
-                              saveImagesToLocalStorage();
-                              showAddDialog(context, shirt);
+                              if (isChecked == false) {
+                                showSnackBar(
+                                    context,
+                                    "Confirm all details unckecked",
+                                    Colors.red);
+                              } else {
+                                showAddDialog(context, shirt);
+                              }
+
                               // debugPrint(localClothImagePath);
                               // debugPrint(localStyleImagePath);
                               // await WorkDatabase.instance.create(shirt);
@@ -522,6 +574,8 @@ class _AddPageState extends State<AddPage> {
                           WorkDatabase.instance.create(shirt);
                           debugPrint(localClothImagePath);
                           Navigator.pop(context);
+                          showSnackBar(
+                              context, "Work successfully added", Colors.green);
                         },
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),
