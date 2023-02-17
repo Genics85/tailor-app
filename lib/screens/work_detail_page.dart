@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:tailor/database/sqllite.dart';
 import '../models/work.dart';
 import '../widgets/colors.dart';
+import '../widgets/snackbar.dart';
 
 class WorkDetailsPage extends StatefulWidget {
   const WorkDetailsPage(
@@ -14,20 +16,44 @@ class WorkDetailsPage extends StatefulWidget {
 }
 
 class _WorkDetailsPageState extends State<WorkDetailsPage> {
+  List<List<dynamic>> measurementsToArray(String arr) {
+    final regExp = RegExp(r'(?:\[)?(\[[^\]]*?\](?:,?))(?:\])?');
+    final result = regExp
+        .allMatches(arr)
+        .map((m) => m.group(0))
+        .map((String? item) => item?.replaceAll(RegExp(r'[\ [\],]'), ''))
+        .map((m) => [m])
+        .toList();
+    return result;
+  }
+
+  Future<void> deleteFiles(File stylePic, File clothPic) async {
+    if (await stylePic.exists()) {
+      await stylePic.delete();
+    }
+    if (await clothPic.exists()) {
+      await clothPic.delete();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<List<dynamic>> measurementsToArray(String arr) {
-      final regExp = RegExp(r'(?:\[)?(\[[^\]]*?\](?:,?))(?:\])?');
-      final result = regExp
-          .allMatches(arr)
-          .map((m) => m.group(0))
-          .map((String? item) => item?.replaceAll(RegExp(r'[\ [\],]'), ''))
-          .map((m) => [m])
-          .toList();
-      return result;
-    }
-
     Size size = MediaQuery.of(context).size;
+
+    var shirt = Work(
+        id: widget.work.id,
+        name: widget.work.name,
+        description: widget.work.description,
+        phone: widget.work.phone,
+        price: widget.work.price,
+        clothImg: widget.work.clothImg,
+        styleImg: widget.work.styleImg,
+        dueDate: widget.work.dueDate,
+        daysLeft: widget.work.daysLeft,
+        measurements: widget.work.measurements,
+        done: 1,
+        style: widget.work.style);
+
     return SafeArea(
         child: Scaffold(
             backgroundColor: AppColors.colorLight,
@@ -53,6 +79,16 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                             ),
                           ),
                         ),
+                        IconButton(
+                            onPressed: () {
+                              showDeleteDialog(context, widget.work.id!,
+                                  widget.work.styleImg, widget.work.clothImg);
+                            },
+                            icon: const Icon(
+                              Icons.delete_outlined,
+                              color: Colors.red,
+                              size: 25,
+                            ))
                       ],
                     ),
                     const SizedBox(
@@ -117,11 +153,11 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                           style: const TextStyle(fontSize: 24),
                         ),
                         Text("GH₵ ${widget.work.price.toString()}",
-                            style: const TextStyle(fontSize: 24))
+                            style: const TextStyle(fontSize: 22))
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -218,7 +254,11 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                       height: 10,
                     ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          WorkDatabase.instance.update(shirt);
+                          showSnackBar(
+                              context, "Work marked as done", Colors.green);
+                        },
                         style: ElevatedButton.styleFrom(
                             minimumSize:
                                 Size(size.width * 0.95, size.height * 0.065),
@@ -234,5 +274,51 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     )
                   ]),
                 ))));
+  }
+
+  showDeleteDialog(
+      BuildContext context, int id, String clothPic, String stylePic) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text("Want to delete work forever?"),
+              content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          deleteFiles(File(stylePic), File(clothPic));
+                          WorkDatabase.instance.delete(widget.work.id!);
+                          Navigator.pop(context);
+                          showSnackBar(
+                              context, "Work successfully deleted", Colors.red);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green[600],
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            )),
+                        child: const Text('Continue')),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(100, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.red[600],
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            )),
+                        child: const Text('Cancel')),
+                  ]),
+            ));
   }
 }

@@ -32,19 +32,19 @@ class WorkDatabase {
 
   Future<List<Work>> getAllWorks() async {
     final db = await instance.database;
-    final result = await db.query("testtable",orderBy: "daysLeft");
+    final result = await db.query("testtable",orderBy: "daysLeft",where: "done =?",whereArgs: [0]);
     return result.map((json) => Work.fromJson(json)).toList();
   }
 
   Future<int> update(Work work) async {
     final db = await instance.database;
     return db.update("testtable", work.toMap(),
-        where: "_id = ?*", whereArgs: [work.id]);
+        where: "_id = ?", whereArgs: [work.id]);
   }
 
   Future<int> delete(int id) async {
     final db = await instance.database;
-    return await db.delete("testtable", where: "_is = ?*", whereArgs: [id]);
+    return await db.delete("testtable", where: "_id = ?", whereArgs: [id]);
   }
 
   Future<Work> getWork(int id) async {

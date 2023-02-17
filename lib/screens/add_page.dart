@@ -17,6 +17,7 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _styleController = TextEditingController();
@@ -52,6 +53,7 @@ class _AddPageState extends State<AddPage> {
 
   resetInputs() {
     setState(() {
+      _priceController.text = "";
       _nameController.text = "";
       _phoneController.text = "";
       _styleController.text = "";
@@ -92,9 +94,19 @@ class _AddPageState extends State<AddPage> {
     setState(() {
       localStyleImagePath = '$path/$styleFileName';
       localClothImagePath = '$path/$clothFileName';
-      debugPrint(localStyleImagePath);
-      debugPrint(localClothImagePath);
     });
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _styleController.dispose();
+    _descriptionController.dispose();
+    _labelController.dispose();
+    _valueController.dispose();
+    _priceController.dispose();
+    super.dispose();
   }
 
   @override
@@ -514,7 +526,6 @@ class _AddPageState extends State<AddPage> {
                                 setState(() {
                                   isChecked = value!;
                                 });
-                                debugPrint(isChecked.toString());
                                 if (isChecked == true) {
                                   saveImagesToLocalStorage();
                                 }
@@ -572,8 +583,8 @@ class _AddPageState extends State<AddPage> {
                     ElevatedButton(
                         onPressed: () {
                           WorkDatabase.instance.create(shirt);
-                          debugPrint(localClothImagePath);
                           Navigator.pop(context);
+                          resetInputs();
                           showSnackBar(
                               context, "Work successfully added", Colors.green);
                         },
