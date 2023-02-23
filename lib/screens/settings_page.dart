@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../database/sqllite.dart';
-import '../models/work.dart';
+import '../config/notification_api.dart';
 import '../widgets/colors.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -11,34 +10,57 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
       body: Column(children: [
-       
-        SizedBox(
-          height: size.height * 0.8,
-          child: FutureBuilder<List<Work>>(
-              future: WorkDatabase.instance.getAllWorks(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<Work>> snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      itemCount: 1,
-                      itemBuilder: ((context, index) {
-                        var item = snapshot.data;
-                        return Text(item.toString());
-                      }));
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
-        )
+        ElevatedButton(
+            onPressed: () {
+              NotificationAPI.showNotification(
+                  title: "Genics",
+                  body: "A simple notification",
+                  payload: "nothing");
+            },
+            style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 0.32, size.height * 0.057),
+                foregroundColor: AppColors.colorDark,
+                backgroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                )),
+            child: const Text("Simple Notification")),
+        ElevatedButton(
+            onPressed: () {
+              debugPrint("clicked");
+            },
+            style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 0.32, size.height * 0.057),
+                foregroundColor: AppColors.colorDark,
+                backgroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                )),
+            child: const Text("Scheduled notification")),
+        ElevatedButton(
+            onPressed: () {
+              debugPrint("clicked");
+            },
+            style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 0.32, size.height * 0.057),
+                foregroundColor: AppColors.colorDark,
+                backgroundColor: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                )),
+            child: const Text("Time bound notification")),
       ]),
     ));
   }
