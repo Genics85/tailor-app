@@ -11,6 +11,6 @@ class NotificationAPI {
             id: Random().nextInt((100)),
             title: "Instant Delivery",
             body: "Notification to notify you that there is nothing",
-            channelKey: "instant_notify"));
+            channelKey: "instant_notification"));
   }
 }

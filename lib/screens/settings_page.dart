@@ -18,10 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Column(children: [
         ElevatedButton(
             onPressed: () {
-              // NotificationAPI.showNotification(
-              //     title: "Genics",
-              //     body: "A simple notification",
-              //     payload: "nothing");
+              NotificationAPI.instantNotify();
             },
             style: ElevatedButton.styleFrom(
                 minimumSize: Size(size.width * 0.32, size.height * 0.057),
