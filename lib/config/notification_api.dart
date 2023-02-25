@@ -1,27 +1,16 @@
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'dart:math';
 
-// class NotificationAPI {
-//   static final _notifications = FlutterLocalNotificationsPlugin();
+import 'package:awesome_notifications/awesome_notifications.dart';
 
-//   static Future<NotificationDetails?> _notificationDetails() async {
-//     return const NotificationDetails(
-//         android: AndroidNotificationDetails(
-//             "channel id", "channel name", "channel description",
-//             importance: Importance.max),
-//         iOS: IOSNotificationDetails());
-//   }
+class NotificationAPI {
+  static Future<bool> instantNotify() async {
+    final AwesomeNotifications awesomeNotifications = AwesomeNotifications();
 
-//   static Future init({bool initScheduled = false}) async {
-//     final android = AndroidInitializationSettings("@mipmap/ic_launcher");
-//     final IOS = IOSInitializationSettings();
-
-//     final settings = InitializationSettings(android: android, iOS: IOS);
-//     await _notifications.initialize(settings,
-//         onSelectNotification: (payload) async {});
-//   }
-
-//   static Future showNotification(
-//           {int id = 0, String? title, String? body, String? payload}) async =>
-//       _notifications.show(id, title, body, await _notificationDetails(),
-//           payload: payload);
-// }
+    return awesomeNotifications.createNotification(
+        content: NotificationContent(
+            id: Random().nextInt((100)),
+            title: "Instant Delivery",
+            body: "Notification to notify you that there is nothing",
+            channelKey: "instant_notify"));
+  }
+}
