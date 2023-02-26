@@ -11,7 +11,14 @@ void main() async {
         channelKey: "instant_notification",
         channelName: "Basic notification",
         channelDescription: "Notification channel for tutorial",
-        defaultColor: AppColors.colorDark)
+        defaultColor: AppColors.colorDark,
+        ledColor: AppColors.colorLight),
+    NotificationChannel(
+        channelKey: "scheduled_notification",
+        channelName: "scheduled notification",
+        channelDescription: "This is for testing scheduled notificatioin",
+        defaultColor: AppColors.colorDark,
+        ledColor: AppColors.colorLight),
   ]);
 }
 

@@ -5,12 +5,23 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 class NotificationAPI {
   static Future<bool> instantNotify() async {
     final AwesomeNotifications awesomeNotifications = AwesomeNotifications();
-
     return awesomeNotifications.createNotification(
         content: NotificationContent(
             id: Random().nextInt((100)),
             title: "Instant Delivery",
             body: "Notification to notify you that there is nothing",
             channelKey: "instant_notification"));
+  }
+
+  static Future<bool> scheduleNotification() async {
+    final awesomeNotification = AwesomeNotifications();
+    return await awesomeNotification.createNotification(
+        content: NotificationContent(
+            id: Random().nextInt(1000),
+            channelKey: "scheduled_notification",
+            title: "Scheduled notification",
+            body: "schedule body"),
+        schedule: NotificationCalendar(
+            day: 26, month: 2, year: 2023, hour: 00, minute: 20));
   }
 }
