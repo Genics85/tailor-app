@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
 
 class NotificationAPI {
   static Future<bool> instantNotify() async {
@@ -17,11 +18,21 @@ class NotificationAPI {
     final awesomeNotification = AwesomeNotifications();
     return await awesomeNotification.createNotification(
         content: NotificationContent(
+            category: NotificationCategory.Reminder,
+            wakeUpScreen: true,
+            autoDismissible: false,
             id: Random().nextInt(1000),
             channelKey: "scheduled_notification",
             title: "Scheduled notification",
             body: "schedule body"),
         schedule: NotificationCalendar(
             day: 26, month: 2, year: 2023, hour: 00, minute: 20));
+  }
+
+  static Future<void> retrieveScheduledNotifications() async {
+    final awesomeNotification = AwesomeNotifications();
+    List<NotificationModel> scheduledNotifications =
+        await awesomeNotification.listScheduledNotifications();
+    print(scheduledNotifications);
   }
 }

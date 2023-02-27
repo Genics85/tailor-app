@@ -32,7 +32,8 @@ class _SettingsPageState extends State<SettingsPage> {
             child: const Text("Simple Notification")),
         ElevatedButton(
             onPressed: () {
-              debugPrint("clicked");
+              NotificationAPI.scheduleNotification();
+              NotificationAPI.retrieveScheduledNotifications();
             },
             style: ElevatedButton.styleFrom(
                 minimumSize: Size(size.width * 0.32, size.height * 0.057),
