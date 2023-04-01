@@ -26,7 +26,7 @@ class NotificationAPI {
             title: "Scheduled notification",
             body: "schedule body"),
         schedule: NotificationCalendar(
-            day: 26, month: 2, year: 2023, hour: 00, minute: 20));
+            day: 27, month: 2, year: 2023, hour: 07, minute: 59));
   }
 
   static Future<void> retrieveScheduledNotifications() async {
