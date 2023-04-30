@@ -478,29 +478,33 @@ class _AddPageState extends State<AddPage> {
                               childAspectRatio: 3,
                             ),
                             itemBuilder: (BuildContext context, int index) {
-                              return ElevatedButton(
-                                  onLongPress: () {
-                                    _labelController.text =
-                                        measurements[index][0];
-                                    _valueController.text =
-                                        measurements[index][1];
-                                    setState(() {
-                                      measurements.removeAt(index);
-                                    });
-                                  },
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                      minimumSize: Size(size.width * 0.32,
-                                          size.height * 0.057),
-                                      foregroundColor: AppColors.colorDark,
-                                      backgroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      textStyle: const TextStyle(
-                                        fontSize: 18,
-                                      )),
-                                  child: Text(
-                                      "${measurements[index][0]}  |  ${measurements[index][1]}"));
+                              return SizedBox(
+                                width: size.width * 0.28,
+                                height: 60,
+                                child: ElevatedButton(
+                                    onLongPress: () {
+                                      _labelController.text =
+                                          measurements[index][0];
+                                      _valueController.text =
+                                          measurements[index][1];
+                                      setState(() {
+                                        measurements.removeAt(index);
+                                      });
+                                    },
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        // minimumSize: Size(size.width * 0.32,
+                                        //     60),
+                                        foregroundColor: AppColors.colorDark,
+                                        backgroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 5),
+                                        textStyle: const TextStyle(
+                                          fontSize: 18,
+                                        )),
+                                    child: Text(
+                                        "${measurements[index][0]}  |  ${measurements[index][1]}")),
+                              );
                             },
                           ),
                         ),

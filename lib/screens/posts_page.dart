@@ -35,7 +35,7 @@ class _PostsPageState extends State<PostsPage> {
                           Container(
                             height: size.height * 0.6,
                             decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: BorderRadius.only( 
                                     topLeft: Radius.circular(6),
                                     topRight: Radius.circular(6)),
                                 image: DecorationImage(

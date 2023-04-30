@@ -16,49 +16,8 @@ class _SettingsPageState extends State<SettingsPage> {
     return SafeArea(
         child: Scaffold(
       body: Column(children: [
-        ElevatedButton(
-            onPressed: () {
-              NotificationAPI.instantNotify();
-            },
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(size.width * 0.32, size.height * 0.057),
-                foregroundColor: AppColors.colorDark,
-                backgroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                )),
-            child: const Text("Simple Notification")),
-        ElevatedButton(
-            onPressed: () {
-              NotificationAPI.scheduleNotification();
-              NotificationAPI.retrieveScheduledNotifications();
-            },
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(size.width * 0.32, size.height * 0.057),
-                foregroundColor: AppColors.colorDark,
-                backgroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                )),
-            child: const Text("Scheduled notification")),
-        ElevatedButton(
-            onPressed: () {
-              debugPrint("clicked");
-            },
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(size.width * 0.32, size.height * 0.057),
-                foregroundColor: AppColors.colorDark,
-                backgroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                )),
-            child: const Text("Time bound notification")),
+        const Text("something here")
+    
       ]),
     ));
   }

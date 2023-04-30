@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                       fixedSize:
-                                          Size(size.width, size.height * 0.09),
+                                          Size(size.width,80),
                                       foregroundColor: AppColors.colorDark,
                                       backgroundColor: Colors.white,
                                       padding: const EdgeInsets.symmetric(

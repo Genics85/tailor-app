@@ -18,17 +18,15 @@ class _LandingPageState extends State<LandingPage> {
     AddPage(),
     FinancePage(),
     HomePage(),
-    PostsPage(),
     SettingsPage()
   ];
   List<IconData> listOfIcons = [
     Icons.add,
     Icons.poll_outlined,
     Icons.home,
-    Icons.photo_library_outlined,
-    Icons.settings,
+    Icons.note_add,
   ];
-  List iconTitle = ["Add", "Stats", "Home", "Posts", "Settings"];
+  List iconTitle = ["Add", "Stats", "Home", "Notes"];
   int currentIndex = 2;
   @override
   Widget build(BuildContext context) {
@@ -36,16 +34,17 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
-      bottomNavigationBar: appNavigationBar(size),
+      bottomNavigationBar:appNavigationBar(size),
       body: listOfPages.elementAt(currentIndex),
     );
   }
 
   Widget appNavigationBar(Size size) {
     return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.only(bottom: 7, left: 10),
-      height: size.width * .155,
+      margin: const EdgeInsets.only(bottom:10),
+      padding: const EdgeInsets.only(bottom:10,right: 10,left: 10),
+      height: 60,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -59,7 +58,7 @@ class _LandingPageState extends State<LandingPage> {
       ),
       child: Center(
         child: ListView.builder(
-          itemCount: 5,
+          itemCount: 4,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => InkWell(
             onTap: () {

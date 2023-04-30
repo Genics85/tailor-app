@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tailor/database/sqllite.dart';
 import 'package:tailor/screens/landing_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/work.dart';
 import '../widgets/colors.dart';
 import '../widgets/snackbar.dart';
@@ -98,22 +98,28 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
-                              width: size.width * 0.32,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.phone),
-                                  Text("Call on phone")
-                                ],
-                              )),
+                          GestureDetector(
+                            onTap: () {
+                              launchUrl(
+                                  Uri.parse('tel:+1234567890'));
+                            },
+                            child: Container(
+                                width: size.width * 0.32,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.phone),
+                                    Text(widget.work.phone.toString())
+                                  ],
+                                )),
+                          ),
                           Container(
                               width: size.width * 0.26,
-                              height: 30,
+                              height: 50,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(6)),
@@ -122,24 +128,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                     MainAxisAlignment.spaceAround,
                                 children: const [
                                   Icon(Icons.phone),
-                                  Text("Whatsapp")
-                                ],
-                              )),
-                          Container(
-                              width: size.width * 0.32,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  const Icon(
-                                    Icons.timer_outlined,
-                                    color: Colors.red,
-                                  ),
-                                  Text("Due in ${widget.daysLeft} days")
+                                  Text("Chate")
                                 ],
                               )),
                         ]),
@@ -232,16 +221,14 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return ElevatedButton(
-                              onPressed: () {
-                                debugPrint("clicked");
-                              },
+                              onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                   minimumSize: Size(
                                       size.width * 0.32, size.height * 0.057),
                                   foregroundColor: AppColors.colorDark,
                                   backgroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
+                                      horizontal: 5, vertical: 5),
                                   textStyle: const TextStyle(
                                     fontSize: 18,
                                   )),
