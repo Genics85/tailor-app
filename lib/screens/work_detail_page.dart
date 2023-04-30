@@ -96,12 +96,12 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                       height: 10,
                     ),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
                             onTap: () {
                               launchUrl(
-                                  Uri.parse('tel:+1234567890'));
+                                  Uri.parse('tel:${widget.work.phone.toString()}'));
                             },
                             child: Container(
                                 width: size.width * 0.32,
@@ -112,25 +112,33 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.phone),
-                                    Text(widget.work.phone.toString())
+                                    const Icon(Icons.call,size: 16,),
+                                    Text(widget.work.phone.toString(),style: TextStyle(fontSize:16),)
                                   ],
                                 )),
                           ),
-                          Container(
-                              width: size.width * 0.26,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: const [
-                                  Icon(Icons.phone),
-                                  Text("Chate")
-                                ],
-                              )),
+                          GestureDetector(
+                            onTap: () {
+                              launchUrl(
+                                  Uri.parse('https://wa.me/${widget.work.phone.toString()}'));
+                            },
+                            child: Container(
+                                width: size.width * 0.22,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.call,color: Colors.green,size: 16,),
+                                    Text("Chat",style: TextStyle(
+                                      fontSize: 16
+                                    ))
+                                  ],
+                                )),
+                          ),
                         ]),
                     const SizedBox(
                       height: 10,
