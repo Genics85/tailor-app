@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:path/path.dart';
+import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:tailor/widgets/big_text.dart';
@@ -122,7 +123,7 @@ class _AddPageState extends State<AddPage> {
         styleImg: localStyleImagePath,
         dueDate: dateTime.toString(),
         daysLeft: daysLeftCalculator(dateTime.toString()),
-        measurements: measurements.toString(),
+        measurements:json.encode(measurements) ,
         done: 0,
         style: _styleController.text);
 

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tailor/database/sqllite.dart';
 import 'package:tailor/screens/landing_page.dart';
@@ -9,7 +10,10 @@ import '../widgets/snackbar.dart';
 
 class WorkDetailsPage extends StatefulWidget {
   const WorkDetailsPage(
-      {super.key, required this.work, required this.daysLeft ,this.done = false});
+      {super.key,
+      required this.work,
+      required this.daysLeft,
+      this.done = false});
   final String daysLeft;
   final bool done;
   final Work work;
@@ -18,14 +22,8 @@ class WorkDetailsPage extends StatefulWidget {
 }
 
 class _WorkDetailsPageState extends State<WorkDetailsPage> {
-  List<List<dynamic>> measurementsToArray(String arr) {
-    final regExp = RegExp(r'(?:\[)?(\[[^\]]*?\](?:,?))(?:\])?');
-    final result = regExp
-        .allMatches(arr)
-        .map((m) => m.group(0))
-        .map((String? item) => item?.replaceAll(RegExp(r'[\ [\],]'), ''))
-        .map((m) => [m])
-        .toList();
+  List<dynamic> measurementsToArray(String arr) {
+    List<dynamic> result = json.decode(arr);
     return result;
   }
 
@@ -107,7 +105,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                             child: Container(
                                 padding: const EdgeInsets.all(5),
                                 width: 130,
-                                height: 50,
+                                height: 40,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(6)),
@@ -120,7 +118,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                     ),
                                     Text(
                                       widget.work.phone.toString(),
-                                      style: TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16),
                                     )
                                   ],
                                 )),
@@ -244,30 +242,32 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                   textStyle: const TextStyle(
                                     fontSize: 18,
                                   )),
-                              child: Text(measurementsToArray(
-                                      widget.work.measurements)[index][0]
-                                  .toString()));
+                              child: Text(
+                                  "${measurementsToArray(widget.work.measurements)[index][0].toString()} | ${measurementsToArray(widget.work.measurements)[index][1].toString()}"));
                         },
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    widget.done?SizedBox(height: 5,):
-                    ElevatedButton(
-                        onPressed: () {
-                          showDoneDialog(context, shirt);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            minimumSize:
-                                Size(size.width * 0.95, size.height * 0.065),
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.green,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            textStyle: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold)),
-                        child: const Text("Done")),
+                    widget.done
+                        ? SizedBox(
+                            height: 5,
+                          )
+                        : ElevatedButton(
+                            onPressed: () {
+                              showDoneDialog(context, shirt);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                minimumSize: Size(
+                                    size.width * 0.95, size.height * 0.065),
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.green,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                textStyle: const TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                            child: const Text("Done")),
                     SizedBox(
                       height: size.height * 0.05,
                     )

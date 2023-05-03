@@ -2,6 +2,8 @@ import 'package:sqflite/sqflite.dart';
 import "package:path/path.dart";
 import 'package:tailor/models/work.dart';
 
+import '../models/people.dart';
+
 class WorkDatabase {
   WorkDatabase._init();
   static final WorkDatabase instance = WorkDatabase._init();
@@ -63,6 +65,71 @@ class WorkDatabase {
         whereArgs: [id]);
     if (maps.isNotEmpty) {
       return Work.fromJson(maps.first);
+    } else {
+      throw Exception("ID $id not found");
+    }
+  }
+
+  Future close() async {
+    final db = await instance.database;
+    db.close();
+  }
+}
+
+class PeopleDatabase {
+  PeopleDatabase._init();
+  static final PeopleDatabase instance = PeopleDatabase._init();
+  static Database? _database;
+  String tableName = "people";
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDB("peopleDatabase.db");
+    return _database!;
+  }
+
+  Future<Database> _initDB(String filePath) async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, filePath);
+    return await openDatabase(path, version: 1, onCreate: _createDB);
+  }
+
+  Future _createDB(Database db, int version) async {
+    await db.execute(
+        'CREATE TABLE people(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,phone TEXT,measurements TEXT)');
+  }
+
+  Future<People> create(People people) async {
+    final db = await instance.database;
+    final id = await db.insert(tableName, people.toMap());
+    return people;
+  }
+
+  Future<List<People>> getAllPeople() async {
+    final db = await instance.database;
+    final result = await db.query(tableName);
+    return result.map((json) => People.fromJson(json)).toList();
+  }
+
+  // Future<int> update(Work work) async {
+  //   final db = await instance.database;
+  //   return db.update(tableName, work.toMap(),
+  //       where: "_id = ?", whereArgs: [work.id]);
+  // }
+
+  Future<int> delete(int id) async {
+    final db = await instance.database;
+    return await db.delete(tableName, where: "_id = ?", whereArgs: [id]);
+  }
+
+  Future<People> getPeople(int id) async {
+    final db = await instance.database;
+    final maps = await db.query(tableName,
+        columns: ["_id", "name", "phone", "measurements"],
+        where: "_id =?*",
+        whereArgs: [id]);
+    if (maps.isNotEmpty) {
+      return People.fromJson(maps.first);
     } else {
       throw Exception("ID $id not found");
     }
