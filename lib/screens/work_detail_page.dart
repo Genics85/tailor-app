@@ -9,8 +9,9 @@ import '../widgets/snackbar.dart';
 
 class WorkDetailsPage extends StatefulWidget {
   const WorkDetailsPage(
-      {super.key, required this.work, required this.daysLeft});
-  final daysLeft;
+      {super.key, required this.work, required this.daysLeft ,this.done = false});
+  final String daysLeft;
+  final bool done;
   final Work work;
   @override
   State<WorkDetailsPage> createState() => _WorkDetailsPageState();
@@ -100,11 +101,12 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              launchUrl(
-                                  Uri.parse('tel:${widget.work.phone.toString()}'));
+                              launchUrl(Uri.parse(
+                                  'tel:${widget.work.phone.toString()}'));
                             },
                             child: Container(
-                                width: size.width * 0.32,
+                                padding: const EdgeInsets.all(5),
+                                width: 130,
                                 height: 50,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
@@ -112,30 +114,32 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.call,size: 16,),
-                                    Text(widget.work.phone.toString(),style: TextStyle(fontSize:16),)
+                                    const Icon(
+                                      Icons.call,
+                                      size: 16,
+                                    ),
+                                    Text(
+                                      widget.work.phone.toString(),
+                                      style: TextStyle(fontSize: 16),
+                                    )
                                   ],
                                 )),
                           ),
                           GestureDetector(
                             onTap: () {
-                              launchUrl(
-                                  Uri.parse('https://wa.me/${widget.work.phone.toString()}'));
+                              launchUrl(Uri.parse(
+                                  'https://wa.me/${widget.work.phone.toString()}'));
                             },
                             child: Container(
-                                width: size.width * 0.22,
+                                width: 50,
                                 height: 40,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(6)),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                    Icon(Icons.call,color: Colors.green,size: 16,),
-                                    Text("Chat",style: TextStyle(
-                                      fontSize: 16
-                                    ))
+                                    Text("Chat", style: TextStyle(fontSize: 16))
                                   ],
                                 )),
                           ),
@@ -249,6 +253,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     const SizedBox(
                       height: 10,
                     ),
+                    widget.done?SizedBox(height: 5,):
                     ElevatedButton(
                         onPressed: () {
                           showDoneDialog(context, shirt);

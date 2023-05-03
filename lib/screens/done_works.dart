@@ -5,6 +5,7 @@ import 'package:tailor/widgets/big_text.dart';
 import '../database/sqllite.dart';
 import '../models/work.dart';
 import '../widgets/colors.dart';
+import 'work_detail_page.dart';
 
 class WorksDone extends StatefulWidget {
   const WorksDone({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _WorksDoneState extends State<WorksDone> {
         child: Scaffold(
             backgroundColor: AppColors.colorLight,
             body: Container(
-                padding: const EdgeInsets.all(15),
+                color: Colors.white,
                 child: Column(children: [
                   Row(
                     children: [
@@ -57,10 +58,18 @@ class _WorksDoneState extends State<WorksDone> {
                                           margin:
                                               const EdgeInsets.only(bottom: 5),
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          WorkDetailsPage(
+                                                            work: work,
+                                                            daysLeft:"0",
+                                                            done:true
+                                                          )));
+                                            },
                                             style: ElevatedButton.styleFrom(
-                                                fixedSize: Size(size.width,
-                                                    size.height * 0.09),
+                                                fixedSize: Size(size.width, 80),
                                                 foregroundColor:
                                                     AppColors.colorDark,
                                                 backgroundColor: Colors.white,

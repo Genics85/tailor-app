@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tailor/screens/people.dart';
 import './home_page.dart';
-import './posts_page.dart';
 import './add_page.dart';
 import './finance_page.dart';
 import './settings_page.dart';
@@ -15,18 +15,20 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   List<Widget> listOfPages = [
-    AddPage(),
-    FinancePage(),
-    HomePage(),
-    SettingsPage()
+    const FinancePage(),
+    const AddPage(),
+    const HomePage(),
+    const People(),
+    const SettingsPage()
   ];
   List<IconData> listOfIcons = [
-    Icons.add,
     Icons.poll_outlined,
-    Icons.home,
-    Icons.note_add,
+    Icons.add,
+    Icons.home_outlined,
+    Icons.person_add_alt_outlined,
+    Icons.settings_outlined
   ];
-  List iconTitle = ["Add", "Stats", "Home", "Notes"];
+  List iconTitle = ["Stats","Add", "Home", "People","Settings"];
   int currentIndex = 2;
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class _LandingPageState extends State<LandingPage> {
       ),
       child: Center(
         child: ListView.builder(
-          itemCount: 4,
+          itemCount: 5,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => InkWell(
             onTap: () {
