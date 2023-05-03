@@ -25,8 +25,11 @@ class _PeopleState extends State<People> {
               Container(
                   height: 50,
                   margin: const EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   color: AppColors.colorLight,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
                         flex: 1,
@@ -34,7 +37,8 @@ class _PeopleState extends State<People> {
                             controller: _searchController,
                             decoration: InputDecoration(
                                 filled: true,
-                                fillColor: const Color.fromARGB(242, 255, 255, 255),
+                                fillColor:
+                                    const Color.fromARGB(242, 255, 255, 255),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(50),
                                     borderSide: BorderSide.none),
@@ -48,10 +52,16 @@ class _PeopleState extends State<People> {
                                 isDense: true,
                                 hintText: "Search")),
                       ),
-                      const SizedBox(width: 10,),
-                              InkWell(
-                                child: Icon(Icons.add_box,size: 40,color: Colors.green[600],),
-                              )
+                      InkWell(
+                        onTap: () {
+                          showDoneDialog(context);
+                        },
+                        child: Icon(
+                          Icons.add_box,
+                          size: 50,
+                          color: AppColors.colorDark,
+                        ),
+                      )
                     ],
                   )),
               Expanded(
@@ -100,5 +110,17 @@ class _PeopleState extends State<People> {
             ]),
           ),
         ));
+  }
+
+  showDoneDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text("Add measurements"),
+              content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [Text("something"), Text("Nothing")]),
+            ));
   }
 }
