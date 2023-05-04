@@ -106,16 +106,22 @@ class PeopleDatabase {
   }
 
   Future<List<People>> getAllPeople() async {
-    final db = await instance.database;
-    final result = await db.query(tableName);
-    return result.map((json) => People.fromJson(json)).toList();
-  }
+  final db = await instance.database;
+  var result = [];
+  try {
+    // Check if the "people" table exists
+    final tableExists = await db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'");
+    if (tableExists.isEmpty) {
+      // If the table does not exist, create it
+      await _createDB(db, 1);
+    }
 
-  // Future<int> update(Work work) async {
-  //   final db = await instance.database;
-  //   return db.update(tableName, work.toMap(),
-  //       where: "_id = ?", whereArgs: [work.id]);
-  // }
+    result = await db.query(tableName);
+  } catch (e) {
+    print("error fetching table");
+  }
+  return result.map((json) => People.fromJson(json)).toList();
+}
 
   Future<int> delete(int id) async {
     final db = await instance.database;

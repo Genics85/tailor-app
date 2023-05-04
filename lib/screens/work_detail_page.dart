@@ -22,6 +22,7 @@ class WorkDetailsPage extends StatefulWidget {
 }
 
 class _WorkDetailsPageState extends State<WorkDetailsPage> {
+  
   List<dynamic> measurementsToArray(String arr) {
     List<dynamic> result = json.decode(arr);
     return result;
@@ -220,7 +221,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                     SizedBox(
                       height: size.height * 0.2,
                       child: GridView.builder(
-                        itemCount: measurementsToArray(widget.work.measurements)
+                        itemCount: json.decode(widget.work.measurements)
                             .length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(

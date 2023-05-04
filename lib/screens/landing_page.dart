@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tailor/screens/people.dart';
+import 'package:tailor/screens/people_page.dart';
 import './home_page.dart';
 import './add_page.dart';
 import './finance_page.dart';
@@ -7,8 +7,8 @@ import './settings_page.dart';
 import '../widgets/colors.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
-
+  const LandingPage({super.key, this.upIndex = 2});
+  final int upIndex;
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
@@ -28,23 +28,30 @@ class _LandingPageState extends State<LandingPage> {
     Icons.person_add_alt_outlined,
     Icons.settings_outlined
   ];
-  List iconTitle = ["Stats","Add", "Home", "People","Settings"];
-  int currentIndex = 2;
+  List iconTitle = ["Stats", "Add", "Home", "People", "Settings"];
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.upIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white,
-      bottomNavigationBar:appNavigationBar(size),
+      bottomNavigationBar: appNavigationBar(size),
       body: listOfPages.elementAt(currentIndex),
     );
   }
 
   Widget appNavigationBar(Size size) {
     return Container(
-      margin: const EdgeInsets.only(bottom:10),
-      padding: const EdgeInsets.only(bottom:10,right: 10,left: 10),
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
       height: 60,
       alignment: Alignment.center,
       decoration: BoxDecoration(

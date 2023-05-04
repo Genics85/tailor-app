@@ -2,6 +2,7 @@ import "dart:math";
 import "package:flutter/material.dart";
 import "package:tailor/database/sqllite.dart";
 import "package:tailor/screens/add_people.dart";
+import "package:tailor/screens/people_detail_page.dart";
 import "package:tailor/widgets/colors.dart";
 
 import "../models/people.dart";
@@ -85,10 +86,18 @@ class _PeoplePageState extends State<PeoplePage> {
                               itemBuilder: (BuildContext context, index) {
                                 Color randomColor = Colors.primaries[
                                     Random().nextInt(Colors.primaries.length)];
+                                People person = snapshot.data![index];
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 5),
                                   child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PeopleDetailsPage(
+                                                      person: person,
+                                                    )));
+                                      },
                                       style: ElevatedButton.styleFrom(
                                           fixedSize: Size(size.width, 60),
                                           foregroundColor: AppColors.colorDark,
@@ -103,19 +112,20 @@ class _PeoplePageState extends State<PeoplePage> {
                                           CircleAvatar(
                                             radius: 30,
                                             backgroundColor: randomColor,
-                                            child: const SizedBox(
+                                            child: SizedBox(
                                               child: Text(
-                                                "A",
-                                                style: TextStyle(
+                                                person.name[0].toUpperCase(),
+                                                style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
                                               ),
                                             ),
                                           ),
-                                          const Text(
-                                            "Something Here",
-                                            style: TextStyle(fontSize: 18),
+                                          Text(
+                                            person.name,
+                                            style:
+                                                const TextStyle(fontSize: 18),
                                           )
                                         ],
                                       )),
