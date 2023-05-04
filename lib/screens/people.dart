@@ -1,19 +1,23 @@
 import "dart:math";
-
 import "package:flutter/material.dart";
+import "package:tailor/database/sqllite.dart";
+import "package:tailor/screens/add_people.dart";
 import "package:tailor/widgets/colors.dart";
 
-import "../widgets/app_text_field.dart";
-import "add_people.dart";
+import "../models/people.dart";
 
-class People extends StatefulWidget {
-  const People({super.key});
+class PeoplePage extends StatefulWidget {
+  const PeoplePage({super.key});
 
   @override
-  State<People> createState() => _PeopleState();
+  State<PeoplePage> createState() => _PeoplePageState();
 }
 
-class _PeopleState extends State<People> {
+class _PeoplePageState extends State<PeoplePage> {
+  // Future<List<People>>? getPeople () async {
+  //   return await PeopleDatabase.instance.getAllPeople();
+  // }
+
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -57,7 +61,10 @@ class _PeopleState extends State<People> {
                                 hintText: "Search")),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddPeople()));
+                        },
                         child: Icon(
                           Icons.add_box,
                           size: 50,
@@ -68,49 +75,57 @@ class _PeopleState extends State<People> {
                   )),
               Expanded(
                   flex: 1,
-                  child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, index) {
-                        Color randomColor = Colors.primaries[
-                            Random().nextInt(Colors.primaries.length)];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const AddPeople()));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  fixedSize: Size(size.width, 60),
-                                  foregroundColor: AppColors.colorDark,
-                                  backgroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  textStyle: const TextStyle(
-                                    fontSize: 13,
-                                  )),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: randomColor,
-                                    child: const SizedBox(
-                                      child: Text(
-                                        "A",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  const Text(
-                                    "Something Here",
-                                    style: TextStyle(fontSize: 18),
-                                  )
-                                ],
-                              )),
-                        );
+                  child: FutureBuilder<List<People>>(
+                      future: PeopleDatabase.instance.getAllPeople(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<People>> snapshot) {
+                        if (snapshot.data != null) {
+                          return ListView.builder(
+                              itemCount: snapshot.data?.length,
+                              itemBuilder: (BuildContext context, index) {
+                                Color randomColor = Colors.primaries[
+                                    Random().nextInt(Colors.primaries.length)];
+                                return Container(
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                          fixedSize: Size(size.width, 60),
+                                          foregroundColor: AppColors.colorDark,
+                                          backgroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
+                                          textStyle: const TextStyle(
+                                            fontSize: 13,
+                                          )),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 30,
+                                            backgroundColor: randomColor,
+                                            child: const SizedBox(
+                                              child: Text(
+                                                "A",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                          const Text(
+                                            "Something Here",
+                                            style: TextStyle(fontSize: 18),
+                                          )
+                                        ],
+                                      )),
+                                );
+                              });
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
                       }))
             ]),
           ),

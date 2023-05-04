@@ -18,7 +18,7 @@ class _LandingPageState extends State<LandingPage> {
     const FinancePage(),
     const AddPage(),
     const HomePage(),
-    const People(),
+    const PeoplePage(),
     const SettingsPage()
   ];
   List<IconData> listOfIcons = [

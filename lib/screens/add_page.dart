@@ -468,7 +468,7 @@ class _AddPageState extends State<AddPage> {
                               if (isChecked == false) {
                                 showSnackBar(
                                     context,
-                                    "Confirm all details unckecked",
+                                    "Confirm all details if filled",
                                     Colors.red);
                               } else {
                                 showAddDialog(context, shirt);

@@ -84,7 +84,7 @@ class PeopleDatabase {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB("peopleDatabase.db");
+    _database = await _initDB("testdatabase.db");
     return _database!;
   }
 

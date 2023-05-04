@@ -251,7 +251,7 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                       height: 10,
                     ),
                     widget.done
-                        ? SizedBox(
+                        ?const SizedBox(
                             height: 5,
                           )
                         : ElevatedButton(
@@ -259,8 +259,8 @@ class _WorkDetailsPageState extends State<WorkDetailsPage> {
                               showDoneDialog(context, shirt);
                             },
                             style: ElevatedButton.styleFrom(
-                                minimumSize: Size(
-                                    size.width * 0.95, size.height * 0.065),
+                                minimumSize: const Size(
+                                    double.infinity, 45),
                                 foregroundColor: Colors.white,
                                 backgroundColor: Colors.green,
                                 padding: const EdgeInsets.symmetric(
