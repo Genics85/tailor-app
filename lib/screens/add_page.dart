@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:tailor/widgets/big_text.dart';
 import '../database/sqllite.dart';
 import '../models/work.dart';
+import '../widgets/app_text_field.dart';
 import '../widgets/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -123,7 +124,7 @@ class _AddPageState extends State<AddPage> {
         styleImg: localStyleImagePath,
         dueDate: dateTime.toString(),
         daysLeft: daysLeftCalculator(dateTime.toString()),
-        measurements:json.encode(measurements) ,
+        measurements: json.encode(measurements),
         done: 0,
         style: _styleController.text);
 
@@ -149,18 +150,19 @@ class _AddPageState extends State<AddPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromARGB(242, 255, 255, 255),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: BorderSide.none),
-                            iconColor: AppColors.colorDark,
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 15),
-                            hintText: "Name")),
+                    getTextField(_nameController, "Enter name here"),
+                    // TextField(
+                    //     controller: _nameController,
+                    //     decoration: InputDecoration(
+                    //         filled: true,
+                    //         fillColor: const Color.fromARGB(242, 255, 255, 255),
+                    //         border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(6),
+                    //             borderSide: BorderSide.none),
+                    //         iconColor: AppColors.colorDark,
+                    //         contentPadding:
+                    //             const EdgeInsets.symmetric(horizontal: 15),
+                    //         hintText: "Name")),
                     const SizedBox(
                       height: 10,
                     ),
@@ -173,19 +175,7 @@ class _AddPageState extends State<AddPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
-                        keyboardType: TextInputType.number,
-                        controller: _phoneController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromARGB(242, 255, 255, 255),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: BorderSide.none),
-                            iconColor: AppColors.colorDark,
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 15),
-                            hintText: "Phone number")),
+                    getNumberTextField(_phoneController, "Enter phone number here"),
                     const SizedBox(
                       height: 10,
                     ),
@@ -198,18 +188,7 @@ class _AddPageState extends State<AddPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
-                        controller: _styleController,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromARGB(242, 255, 255, 255),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide: BorderSide.none),
-                            iconColor: AppColors.colorDark,
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 15),
-                            hintText: "Style name:")),
+                    getTextField(_styleController, "Enter style name here"),
                     const SizedBox(
                       height: 10,
                     ),
@@ -329,23 +308,8 @@ class _AddPageState extends State<AddPage> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                TextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: _priceController,
-                                    decoration: InputDecoration(
-                                        suffix: const Text("GH₵"),
-                                        filled: true,
-                                        fillColor: const Color.fromARGB(
-                                            242, 255, 255, 255),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                            borderSide: BorderSide.none),
-                                        iconColor: AppColors.colorDark,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                        hintText: "Price"))
+                                getNumberTextField(
+                                    _priceController, "Enter price here")
                               ],
                             )),
                         const SizedBox(
@@ -410,43 +374,13 @@ class _AddPageState extends State<AddPage> {
                             children: [
                               Expanded(
                                   flex: 4,
-                                  child: TextField(
-                                      controller: _labelController,
-                                      decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: const Color.fromARGB(
-                                              242, 255, 255, 255),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              borderSide: BorderSide.none),
-                                          iconColor: AppColors.colorDark,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 15),
-                                          hintText: "Label"))),
+                                  child: getTextField(_labelController, "Lable")),
                               const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
                                   flex: 4,
-                                  child: TextField(
-                                      keyboardType: TextInputType.number,
-                                      controller: _valueController,
-                                      decoration: InputDecoration(
-                                          suffix: const Text("in"),
-                                          filled: true,
-                                          fillColor: const Color.fromARGB(
-                                              242, 255, 255, 255),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              borderSide: BorderSide.none),
-                                          iconColor: AppColors.colorDark,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 15),
-                                          hintText: "Value")))
+                                  child: getNumberTextField(_valueController, "Value"))
                             ]),
                         const SizedBox(
                           height: 10,

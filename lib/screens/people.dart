@@ -3,6 +3,9 @@ import "dart:math";
 import "package:flutter/material.dart";
 import "package:tailor/widgets/colors.dart";
 
+import "../widgets/app_text_field.dart";
+import "add_people.dart";
+
 class People extends StatefulWidget {
   const People({super.key});
 
@@ -12,6 +15,7 @@ class People extends StatefulWidget {
 
 class _PeopleState extends State<People> {
   final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -53,9 +57,7 @@ class _PeopleState extends State<People> {
                                 hintText: "Search")),
                       ),
                       InkWell(
-                        onTap: () {
-                          showDoneDialog(context);
-                        },
+                        onTap: () {},
                         child: Icon(
                           Icons.add_box,
                           size: 50,
@@ -74,7 +76,10 @@ class _PeopleState extends State<People> {
                         return Container(
                           margin: const EdgeInsets.only(bottom: 5),
                           child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const AddPeople()));
+                              },
                               style: ElevatedButton.styleFrom(
                                   fixedSize: Size(size.width, 60),
                                   foregroundColor: AppColors.colorDark,
@@ -110,17 +115,5 @@ class _PeopleState extends State<People> {
             ]),
           ),
         ));
-  }
-
-  showDoneDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => AlertDialog(
-              title: const Text("Add measurements"),
-              content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [Text("something"), Text("Nothing")]),
-            ));
   }
 }
