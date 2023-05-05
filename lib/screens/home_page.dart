@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tailor/screens/work_detail_page.dart';
+import 'package:tailor/widgets/big_text.dart';
 import '../database/sqllite.dart';
 import '../models/work.dart';
 import '../widgets/colors.dart';
@@ -177,14 +178,18 @@ class _HomePageState extends State<HomePage> {
                               }),
                         ]);
                       } else {
-                        return Center(
-                            child: Container(
-                          height: 70,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage("images/empty.png"))),
-                        ));
+                        return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: const AssetImage("images/empty.png"),
+                                width: size.width * 0.7,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const BigText(text: "No work added")
+                            ]);
                       }
                     } else {
                       return const Center(

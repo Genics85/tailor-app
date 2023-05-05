@@ -44,101 +44,125 @@ class _WorksDoneState extends State<WorksDone> {
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Work>> snapshot) {
                           if (snapshot.data != null) {
-                            return Stack(
-                                alignment: Alignment.topCenter,
-                                children: [
-                                  ListView.builder(
-                                      itemCount: snapshot.data?.length,
-                                      itemBuilder:
-                                          (BuildContext context, index) {
-                                        Work work = snapshot.data![index];
-                                        return Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          margin:
-                                              const EdgeInsets.only(bottom: 5),
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          WorkDetailsPage(
-                                                            work: work,
-                                                            daysLeft:"0",
-                                                            done:true
-                                                          )));
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                                fixedSize: Size(size.width, 80),
-                                                foregroundColor:
-                                                    AppColors.colorDark,
-                                                backgroundColor: Colors.white,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 10),
-                                                textStyle: const TextStyle(
-                                                  fontSize: 13,
-                                                )),
-                                            child: Row(children: [
-                                              Container(
+                            if (snapshot.data!.isNotEmpty) {
+                              return Stack(
+                                  alignment: Alignment.topCenter,
+                                  children: [
+                                    ListView.builder(
+                                        itemCount: snapshot.data?.length,
+                                        itemBuilder:
+                                            (BuildContext context, index) {
+                                          Work work = snapshot.data![index];
+                                          return Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 5),
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            WorkDetailsPage(
+                                                                work: work,
+                                                                daysLeft: "0",
+                                                                done: true)));
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  fixedSize:
+                                                      Size(size.width, 80),
+                                                  foregroundColor:
+                                                      AppColors.colorDark,
+                                                  backgroundColor: Colors.white,
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                                  textStyle: const TextStyle(
+                                                    fontSize: 13,
+                                                  )),
+                                              child: Row(children: [
+                                                Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 6),
+                                                    height: size.height * 0.075,
+                                                    width: size.width * 0.15,
+                                                    decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            image: FileImage(
+                                                                File(work
+                                                                    .styleImg))))),
+                                                Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 6),
+                                                    height: size.height * 0.075,
+                                                    width: size.width * 0.15,
+                                                    decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                            image: FileImage(
+                                                                File(work
+                                                                    .clothImg))))),
+                                                Container(
                                                   margin: const EdgeInsets.only(
-                                                      right: 6),
-                                                  height: size.height * 0.075,
-                                                  width: size.width * 0.15,
-                                                  decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: FileImage(File(
-                                                              work.styleImg))))),
-                                              Container(
-                                                  margin: const EdgeInsets.only(
-                                                      right: 6),
-                                                  height: size.height * 0.075,
-                                                  width: size.width * 0.15,
-                                                  decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: FileImage(File(
-                                                              work.clothImg))))),
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    right: 5),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      work.name,
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 16),
-                                                    ),
-                                                    const SizedBox(height: 9),
-                                                    Text(work.description
-                                                                .length <
-                                                            30
-                                                        ? work.description
-                                                        : "${work.description.substring(0, 30)}...")
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                    alignment:
-                                                        Alignment.centerRight,
-                                                    child: Text(
-                                                        "Gh ${work.price.toString()}",
+                                                      right: 5),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        work.name,
                                                         style: const TextStyle(
-                                                            fontSize: 18)),
-                                                  ))
-                                            ]),
-                                          ),
-                                        );
-                                      }),
-                                ]);
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 16),
+                                                      ),
+                                                      const SizedBox(height: 9),
+                                                      Text(work.description
+                                                                  .length <
+                                                              30
+                                                          ? work.description
+                                                          : "${work.description.substring(0, 30)}...")
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      child: Text(
+                                                          "Gh ${work.price.toString()}",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      18)),
+                                                    ))
+                                              ]),
+                                            ),
+                                          );
+                                        }),
+                                  ]);
+                            } else {
+                              return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      image:
+                                          const AssetImage("images/empty.png"),
+                                      width: size.width * 0.7,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const BigText(text: "No work marked done")
+                                  ]);
+                            }
                           } else {
                             return const Center(
                               child: CircularProgressIndicator(),

@@ -147,9 +147,11 @@ class _PeopleDetailsPageState extends State<PeopleDetailsPage> {
                         onPressed: () {
                           PeopleDatabase.instance.delete(widget.person.id!);
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const LandingPage(upIndex: 3,)));
-                          showSnackBar(
-                              context, "Customer successfully deleted", Colors.red);
+                              builder: (context) => const LandingPage(
+                                    upIndex: 3,
+                                  )));
+                          showSnackBar(context, "Customer successfully deleted",
+                              Colors.red);
                         },
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),

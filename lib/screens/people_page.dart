@@ -6,6 +6,7 @@ import "package:tailor/screens/people_detail_page.dart";
 import "package:tailor/widgets/colors.dart";
 
 import "../models/people.dart";
+import "../widgets/big_text.dart";
 
 class PeoplePage extends StatefulWidget {
   const PeoplePage({super.key});
@@ -81,56 +82,73 @@ class _PeoplePageState extends State<PeoplePage> {
                       builder: (BuildContext context,
                           AsyncSnapshot<List<People>> snapshot) {
                         if (snapshot.data != null) {
-                          return ListView.builder(
-                              itemCount: snapshot.data?.length,
-                              itemBuilder: (BuildContext context, index) {
-                                Color randomColor = Colors.primaries[
-                                    Random().nextInt(Colors.primaries.length)];
-                                People person = snapshot.data![index];
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 5),
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PeopleDetailsPage(
-                                                      person: person,
-                                                    )));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          fixedSize: Size(size.width, 60),
-                                          foregroundColor: AppColors.colorDark,
-                                          backgroundColor: Colors.white,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 10),
-                                          textStyle: const TextStyle(
-                                            fontSize: 13,
-                                          )),
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 30,
-                                            backgroundColor: randomColor,
-                                            child: SizedBox(
-                                              child: Text(
-                                                person.name[0].toUpperCase(),
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
+                          if (snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                                itemCount: snapshot.data?.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  Color randomColor = Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)];
+                                  People person = snapshot.data![index];
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PeopleDetailsPage(
+                                                        person: person,
+                                                      )));
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            fixedSize: Size(size.width, 60),
+                                            foregroundColor:
+                                                AppColors.colorDark,
+                                            backgroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            textStyle: const TextStyle(
+                                              fontSize: 13,
+                                            )),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: randomColor,
+                                              child: SizedBox(
+                                                child: Text(
+                                                  person.name[0].toUpperCase(),
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            person.name,
-                                            style:
-                                                const TextStyle(fontSize: 18),
-                                          )
-                                        ],
-                                      )),
-                                );
-                              });
+                                            Text(
+                                              person.name,
+                                              style:
+                                                  const TextStyle(fontSize: 18),
+                                            )
+                                          ],
+                                        )),
+                                  );
+                                });
+                          } else {
+                            return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(
+                                    image: const AssetImage("images/empty.png"),
+                                    width: size.width * 0.7,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const BigText(text: "No Customer Added")
+                                ]);
+                          }
                         } else {
                           return const Center(
                             child: CircularProgressIndicator(),
