@@ -81,19 +81,18 @@ class _PeopleDetailsPageState extends State<PeopleDetailsPage> {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "Name: ",
-              style: TextStyle(fontSize: 18),
+            BigText(
+              text: "Name: ${widget.person.name}",
             ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // BigText(text: widget.person.name),
             const SizedBox(
               height: 10,
             ),
-            BigText(text: widget.person.name),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text("Phone: ", style: TextStyle(fontSize: 18)),
-            BigText(text: widget.person.phone),
+            // const Text("Phone: ", style: TextStyle(fontSize: 18)),
+            BigText(text: "Phone: ${widget.person.phone}"),
             const SizedBox(
               height: 10,
             ),

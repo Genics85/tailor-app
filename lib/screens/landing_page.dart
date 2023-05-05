@@ -24,11 +24,11 @@ class _LandingPageState extends State<LandingPage> {
   List<IconData> listOfIcons = [
     Icons.poll_outlined,
     Icons.add,
-    Icons.home_outlined,
+    Icons.work_outline,
     Icons.person_add_alt_outlined,
     Icons.settings_outlined
   ];
-  List iconTitle = ["Stats", "Add", "Home", "Customers", "Settings"];
+  List iconTitle = ["Stats", "Add", "Works", "Customers", "Settings"];
   late int currentIndex;
 
   @override
