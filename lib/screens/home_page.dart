@@ -76,103 +76,116 @@ class _HomePageState extends State<HomePage> {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<Work>> snapshot) {
                     if (snapshot.data != null) {
-                      return Stack(alignment: Alignment.topCenter, children: [
-                        ListView.builder(
-                            itemCount: snapshot.data?.length,
-                            itemBuilder: (BuildContext context, index) {
-                              Work work = snapshot.data![index];
-                              return Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                margin: const EdgeInsets.only(bottom: 5),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                WorkDetailsPage(
-                                                  work: work,
-                                                  daysLeft: daysLeftCalculator(
-                                                      work.dueDate),
-                                                )));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      fixedSize:
-                                          Size(size.width,80),
-                                      foregroundColor: AppColors.colorDark,
-                                      backgroundColor: Colors.white,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      textStyle: const TextStyle(
-                                        fontSize: 13,
-                                      )),
-                                  child: Row(children: [
-                                    Container(
-                                        margin: const EdgeInsets.only(right: 6),
-                                        height: size.height * 0.075,
-                                        width: size.width * 0.15,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: FileImage(
-                                                    File(work.styleImg))))),
-                                    Container(
-                                        margin: const EdgeInsets.only(right: 6),
-                                        height: size.height * 0.075,
-                                        width: size.width * 0.15,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: FileImage(
-                                                    File(work.clothImg))))),
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 5),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            work.name,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                          const SizedBox(height: 9),
-                                          Text(work.description.length < 30
-                                              ? work.description
-                                              : "${work.description.substring(0, 30)}...")
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        alignment: Alignment.centerRight,
+                      if (snapshot.data!.isNotEmpty) {
+                        return Stack(alignment: Alignment.topCenter, children: [
+                          ListView.builder(
+                              itemCount: snapshot.data?.length,
+                              itemBuilder: (BuildContext context, index) {
+                                Work work = snapshot.data![index];
+                                return Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WorkDetailsPage(
+                                                    work: work,
+                                                    daysLeft:
+                                                        daysLeftCalculator(
+                                                            work.dueDate),
+                                                  )));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        fixedSize: Size(size.width, 80),
+                                        foregroundColor: AppColors.colorDark,
+                                        backgroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        textStyle: const TextStyle(
+                                          fontSize: 13,
+                                        )),
+                                    child: Row(children: [
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 6),
+                                          height: size.height * 0.075,
+                                          width: size.width * 0.15,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: FileImage(
+                                                      File(work.styleImg))))),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 6),
+                                          height: size.height * 0.075,
+                                          width: size.width * 0.15,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: FileImage(
+                                                      File(work.clothImg))))),
+                                      Container(
+                                        margin: const EdgeInsets.only(right: 5),
                                         child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            const Icon(Icons.timer_outlined),
-                                            const SizedBox(height: 9),
                                             Text(
-                                                daysLeftCalculator(
-                                                    work.dueDate),
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: work.daysLeft < 0
-                                                      ? Colors.red
-                                                      : Colors.black,
+                                              work.name,
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                ))
+                                                  fontSize: 16),
+                                            ),
+                                            const SizedBox(height: 9),
+                                            Text(work.description.length < 30
+                                                ? work.description
+                                                : "${work.description.substring(0, 30)}...")
                                           ],
                                         ),
                                       ),
-                                    )
-                                  ]),
-                                ),
-                              );
-                            }),
-                      ]);
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          alignment: Alignment.centerRight,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(Icons.timer_outlined),
+                                              const SizedBox(height: 9),
+                                              Text(
+                                                  daysLeftCalculator(
+                                                      work.dueDate),
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: work.daysLeft < 0
+                                                        ? Colors.red
+                                                        : Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                                  ),
+                                );
+                              }),
+                        ]);
+                      } else {
+                        return Center(
+                            child: Container(
+                          height: 70,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage("images/empty.png"))),
+                        ));
+                      }
                     } else {
                       return const Center(
                         child: CircularProgressIndicator(),
