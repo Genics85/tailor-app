@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
 
   Widget appNavigationBar(Size size) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
       padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
       height: 60,
       alignment: Alignment.center,

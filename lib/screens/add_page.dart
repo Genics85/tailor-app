@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:path/path.dart';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:tailor/widgets/big_text.dart';
 import '../database/sqllite.dart';
+import '../models/people.dart';
 import '../models/work.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/colors.dart';
@@ -50,7 +52,7 @@ class _AddPageState extends State<AddPage> {
   String localClothImagePath = "";
   String styleSomething = "";
   String clothSomething = "";
-  List<List> measurements = [];
+  var measurements = [];
   bool isChecked = false;
 
   resetInputs() {
@@ -89,8 +91,9 @@ class _AddPageState extends State<AddPage> {
   saveImagesToLocalStorage() async {
     final directory = await getApplicationDocumentsDirectory();
     String path = directory.path;
-    final clothFileName = basename(clothPic!.path);
-    final styleFileName = basename(stylePic!.path);
+
+    final clothFileName = clothPic != null ? basename(clothPic!.path) : "";
+    final styleFileName = stylePic != null ? basename(stylePic!.path) : "";
     await clothPic?.copy('$path/$clothFileName');
     await stylePic?.copy('$path/$styleFileName');
     setState(() {
@@ -139,7 +142,32 @@ class _AddPageState extends State<AddPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const BigText(text: "Add new work"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const BigText(text: "Add new work"),
+                        ElevatedButton(
+                            onPressed: () {
+                              showUploadDialog(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                // minimumSize: Size(size.width * 0.32,
+                                //     60),
+                                foregroundColor: AppColors.colorLight,
+                                backgroundColor: AppColors.colorDark,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                )),
+                            child: Row(
+                              children: const [
+                                Text("Upload"),
+                                Icon(Icons.upload)
+                              ],
+                            )),
+                      ],
+                    ),
                     const SizedBox(height: 10),
                     const Align(
                         alignment: Alignment.centerLeft,
@@ -175,7 +203,8 @@ class _AddPageState extends State<AddPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    getNumberTextField(_phoneController, "Enter phone number here"),
+                    getNumberTextField(
+                        _phoneController, "Enter phone number here"),
                     const SizedBox(
                       height: 10,
                     ),
@@ -374,13 +403,15 @@ class _AddPageState extends State<AddPage> {
                             children: [
                               Expanded(
                                   flex: 4,
-                                  child: getTextField(_labelController, "Lable")),
+                                  child:
+                                      getTextField(_labelController, "Lable")),
                               const SizedBox(
                                 width: 10,
                               ),
                               Expanded(
                                   flex: 4,
-                                  child: getNumberTextField(_valueController, "Value"))
+                                  child: getNumberTextField(
+                                      _valueController, "Value"))
                             ]),
                         const SizedBox(
                           height: 10,
@@ -468,7 +499,7 @@ class _AddPageState extends State<AddPage> {
                               if (isChecked == false) {
                                 showSnackBar(
                                     context,
-                                    "Confirm all details if filled",
+                                    "Confirm all details unchecked",
                                     Colors.red);
                               } else {
                                 showAddDialog(context, shirt);
@@ -539,6 +570,95 @@ class _AddPageState extends State<AddPage> {
                         child: const Text('Cancel')),
                   ]),
             ));
+  }
+
+  showUploadDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+              actions: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel"),
+                )
+              ],
+              title: const Center(child: Text('Choose a customer')),
+              content: Column(children: [
+                Expanded(
+                    flex: 1,
+                    child: FutureBuilder<List<People>>(
+                        future: PeopleDatabase.instance.getAllPeople(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<People>> snapshot) {
+                          if (snapshot.data != null) {
+                            return ListView.builder(
+                                itemCount: snapshot.data?.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  Color randomColor = Colors.primaries[Random()
+                                      .nextInt(Colors.primaries.length)];
+                                  People person = snapshot.data![index];
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          runUpload(context, person);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            fixedSize:
+                                                const Size(double.infinity, 50),
+                                            foregroundColor:
+                                                AppColors.colorDark,
+                                            backgroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            textStyle: const TextStyle(
+                                              fontSize: 13,
+                                            )),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: randomColor,
+                                              child: SizedBox(
+                                                child: Text(
+                                                  person.name[0].toUpperCase(),
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              person.name,
+                                              style:
+                                                  const TextStyle(fontSize: 18),
+                                            )
+                                          ],
+                                        )),
+                                  );
+                                });
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        }))
+              ]),
+            ));
+  }
+
+  runUpload(BuildContext context, People person) {
+    setState(() {
+      _nameController.text = person.name;
+      _phoneController.text = person.phone;
+      measurements = json.decode(person.measurements);
+    });
+    Navigator.pop(context);
   }
 
   pickDate(BuildContext context) {

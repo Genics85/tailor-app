@@ -87,7 +87,7 @@ class _AddPeopleState extends State<AddPeople> {
                       const SizedBox(
                         height: 5,
                       ),
-                      getTextField(_phoneController, "Enter number here"),
+                      getNumberTextField(_phoneController, "Enter number here"),
                       const SizedBox(
                         height: 5,
                       ),
